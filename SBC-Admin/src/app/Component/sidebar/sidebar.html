@@ -1,1 +1,75 @@
-<p>sidebar works!</p>
+<aside id="sidebar" [ngClass]="{ expand: isExpanded, collapsed: !isExpanded }">
+  <div class="sidebar-container">
+    <div class="sidebar-header">
+      <div class="logo" (click)="toggleSidebar()">
+        <img src="../../../assets/logo/logo.png" alt="Bhagat Samosa" />
+      </div>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/Dashboard" routerLinkActive="Selected-Item"
+          [routerLinkActiveOptions]="{ exact: true }">
+          <i [class]="getIcon('Dashboard')"></i>
+          <span *ngIf="isExpanded">Dashboard</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/category" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Category')"></i>
+          <span *ngIf="isExpanded">User Management</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/Product" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Product')"></i>
+          <span *ngIf="isExpanded">Ride Management</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/Order" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Order')"></i>
+          <span *ngIf="isExpanded">Event Management</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/AboutUs" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('AboutUs')"></i>
+          <span *ngIf="isExpanded">Gallery</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/Review" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Review')"></i>
+          <span *ngIf="isExpanded">About Us</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/Testimonial" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Testimonial')"></i>
+          <span *ngIf="isExpanded">Slider</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/Slider" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Slider')"></i>
+          <span *ngIf="isExpanded">Team</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/Customer" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Customer')"></i>
+          <span *ngIf="isExpanded">Inquiry</span>
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="sidebar-footer">
+      <a class="sidebar-link logout-btn" (click)="onLogout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span *ngIf="isExpanded">Logout</span>
+      </a>
+    </div>
+  </div>
+</aside>
