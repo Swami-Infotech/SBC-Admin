@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usermanagement',
@@ -12,6 +13,8 @@ export class Usermanagement {
 
   isModalOpen = false;
   showPassword = false;
+
+  constructor(private route:Router){}
 
   OpenModal() {
     this.isModalOpen = true;
@@ -30,5 +33,9 @@ export class Usermanagement {
   onFileChange(event: any) {
     const file = event.target.files[0];
     console.log(file);
+  }
+
+  Redirectuser(){
+    this.route.navigate(['/UserManagement/Userdetails'])
   }
 }

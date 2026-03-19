@@ -5,6 +5,7 @@ import { Enquiries } from './Component/enquiries/enquiries';
 import { Usermanagement } from './Component/usermanagement/usermanagement';
 import { Slider } from './Component/slider/slider';
 import { Team } from './Component/team/team';
+import { Userdetails } from './Component/userdetails/userdetails';
 
 export const routes: Routes = [
     {
@@ -30,5 +31,18 @@ export const routes: Routes = [
     {
         path:"Slider",
         component:Slider
+    },
+       {
+        path:"UserManagement",
+        children:[
+            {
+                path:"",
+                component:Usermanagement
+            },
+            {
+                path:"Userdetails",
+                component:Userdetails
+            }
+        ]
     }
 ];
