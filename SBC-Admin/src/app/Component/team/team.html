@@ -1,0 +1,117 @@
+<div class="container p-4">
+    <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+        <h2 class="page-title m-0 fw-bold">Team</h2>
+
+        <div class="header-actions d-flex gap-3 align-items-center">
+            <div class="search-box position-relative">
+                <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                <input type="text" class="form-control ps-5 shadow-none border-secondary-subtle"
+                    placeholder="Search...">
+            </div>
+            <button class="btn btn-dark btn-add px-4" data-bs-toggle="modal" data-bs-target="#addTeamModal">
+                Add Team
+            </button>
+        </div>
+    </div>
+
+    <div class="table-container shadow-sm rounded border bg-white">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Sr No</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Phone</th>
+                        <th class="text-center pe-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="ps-4 text-secondary">01</td>
+                        <td>
+                            <div class="profile-img-box">
+                                <img src="https://via.placeholder.com/40" alt="profile" class="rounded border shadow-sm"
+                                    width="40" height="40">
+                            </div>
+                        </td>
+                        <td class="fw-bold text-dark">Raj Patel</td>
+                        <td class="text-muted">Ride Leader</td>
+                        <td class="text-muted">+91 9876543210</td>
+                        <td class="text-center pe-4">
+                            <button class="btn btn-link text-dark p-1 me-2 shadow-none" data-bs-toggle="modal"
+                                data-bs-target="#addTeamModal">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-link text-danger p-1 shadow-none">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addTeamModal" tabindex="-1" aria-labelledby="addTeamModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-design">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold fs-4" id="addTeamModalLabel">Add Team</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark small mb-1">Image</label>
+                            <div class="input-group custom-rounded-input">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                        class="bi bi-image"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                    placeholder="Upload Image" readonly>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark small mb-1">Name</label>
+                            <div class="input-group custom-rounded-input">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                        class="bi bi-person"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0 shadow-none"
+                                    placeholder="Enter Name">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark small mb-1">Role</label>
+                            <div class="input-group custom-rounded-input">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                        class="bi bi-person-badge"></i></span>
+                                <select class="form-select border-start-0 ps-0 shadow-none text-muted">
+                                    <option selected disabled>Select Role</option>
+                                    <option value="1">Ride Leader</option>
+                                    <option value="2">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-dark small mb-1">Phone Number</label>
+                            <div class="input-group custom-rounded-input">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                        class="bi bi-telephone"></i></span>
+                                <input type="tel" class="form-control border-start-0 ps-0 shadow-none"
+                                    placeholder="Enter Phone Number">
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="btn btn-dark w-100 py-3 fw-bold rounded-pill shadow-sm mt-2">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

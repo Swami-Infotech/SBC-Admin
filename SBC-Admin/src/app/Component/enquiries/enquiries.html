@@ -1,49 +1,164 @@
 <div class="container p-4">
-
     <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
-            <h2 class="page-title m-0">Enquiries</h2>
+        <h2 class="page-title m-0">Enquiries</h2>
 
-            <div class="header-actions d-flex gap-3 align-items-center">
-                <div class="search-box">
-                    <i class="bi bi-search"></i>
-                    <input type="text" class="form-control" placeholder="Search...">
-                </div>
-                <button class="btn btn-dark btn-add">Add Enquiries</button>
+        <div class="header-actions d-flex gap-3 align-items-center">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" class="form-control" placeholder="Search...">
             </div>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table custom-table">
-                <thead>
-                    <tr>
-                        <th>Sr No</th>
-                        <th>User Name</th>
-                        <th>Phone</th>
-                        <th>Pickup Location</th>
-                        <th>Drop Location</th>
-                        <th>Ride Date</th>
-                        <th>Time</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>John Mehta</td>
-                        <td>+91 9876543210</td>
-                        <td>Surat</td>
-                        <td>Surat</td>
-                        <td>12 Jan 2026</td>
-                        <td>6:00 PM</td>
-                        <td class="text-center">
-                            <div class="action-btns">
-                                <i class="bi bi-eye text-primary"></i>
-                                <i class="bi bi-pencil-square text-secondary"></i>
-                                <i class="bi bi-trash text-danger"></i>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <button class="btn btn-dark btn-add" data-bs-toggle="modal" data-bs-target="#addEnquiryModal">Add
+                Enquiries</button>
         </div>
     </div>
+
+    <div class="table-responsive">
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th>Sr No</th>
+                    <th>User Name</th>
+                    <th>Phone</th>
+                    <th>Pickup Location</th>
+                    <th>Drop Location</th>
+                    <th>Ride Date</th>
+                    <th>Time</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01</td>
+                    <td>John Mehta</td>
+                    <td>+91 9876543210</td>
+                    <td>Surat</td>
+                    <td>Surat</td>
+                    <td>12 Jan 2026</td>
+                    <td>6:00 PM</td>
+                    <td class="text-center">
+                        <div class="action-btns">
+                            <i class="bi bi-eye text-primary" data-bs-toggle="modal"
+                                data-bs-target="#viewEnquiryModal"></i>
+                            <i class="bi bi-pencil-square text-secondary" data-bs-toggle="modal"
+                                data-bs-target="#addEnquiryModal"></i>
+                            <i class="bi bi-trash text-danger"></i>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="viewEnquiryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal view-modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">John Mehta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <hr class="mx-4 my-2">
+            <div class="modal-body p-4 pt-2">
+                <div class="d-flex flex-column gap-3">
+                    <div class="view-item d-flex align-items-center gap-3">
+                        <div class="icon-circle"><i class="bi bi-telephone-fill"></i></div>
+                        <span class="view-label fw-bold">Phone Number :</span>
+                        <span class="view-value">+91 9876543210</span>
+                    </div>
+                    <div class="view-item d-flex align-items-center gap-3">
+                        <div class="icon-circle"><i class="bi bi-geo-alt-fill"></i></div>
+                        <span class="view-label fw-bold">Pickup Location :</span>
+                        <span class="view-value">Surat</span>
+                    </div>
+                    <div class="view-item d-flex align-items-center gap-3">
+                        <div class="icon-circle"><i class="bi bi-geo-alt-fill"></i></div>
+                        <span class="view-label fw-bold">Drop Location :</span>
+                        <span class="view-value">Surat</span>
+                    </div>
+                    <div class="view-item d-flex align-items-center gap-3">
+                        <div class="icon-circle"><i class="bi bi-calendar-event-fill"></i></div>
+                        <span class="view-label fw-bold">Ride Date :</span>
+                        <span class="view-value">12 Jan 2026</span>
+                    </div>
+                    <div class="view-item d-flex align-items-center gap-3">
+                        <div class="icon-circle"><i class="bi bi-clock-fill"></i></div>
+                        <span class="view-label fw-bold">Time :</span>
+                        <span class="view-value">6:00 Pm</span>
+                    </div>
+                </div>
+                <div class="text-center mt-4 pt-2">
+                    <button type="button" class="btn btn-dark px-5 py-2 fw-bold rounded-pill w-100"
+                        style="background-color: #0f172a;" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addEnquiryModal" tabindex="-1" aria-labelledby="addEnquiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content custom-modal">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold" id="addEnquiryModalLabel">Enquiries</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">User Name</label>
+                            <div class="input-group-custom">
+                                <i class="bi bi-person"></i>
+                                <input type="text" class="form-control custom-input" placeholder="Enter User Name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Phone Number</label>
+                            <div class="input-group-custom">
+                                <i class="bi bi-telephone"></i>
+                                <input type="text" class="form-control custom-input" placeholder="Enter Phone Number">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Pickup Location</label>
+                            <div class="input-group-custom">
+                                <i class="bi bi-geo-alt"></i>
+                                <input type="text" class="form-control custom-input"
+                                    placeholder="Enter Pickup Location">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Drop Location</label>
+                            <div class="input-group-custom">
+                                <i class="bi bi-geo-alt"></i>
+                                <input type="text" class="form-control custom-input" placeholder="Enter Drop Location">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Ride Date</label>
+                            <div class="input-group-custom">
+                                <i class="bi bi-calendar3"></i>
+                                <input type="text" class="form-control custom-input" placeholder="Select Date"
+                                    onfocus="(this.type='date')">
+                                <i class="bi bi-chevron-down ms-auto pe-2"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Time</label>
+                            <div class="input-group-custom">
+                                <i class="bi bi-clock"></i>
+                                <input type="text" class="form-control custom-input" placeholder="Select Time"
+                                    onfocus="(this.type='time')">
+                                <i class="bi bi-chevron-down ms-auto pe-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mt-5">
+                        <button type="button" class="btn btn-dark px-5 py-2 fw-bold rounded-pill shadow-sm"
+                            style="background-color: #0f172a; min-width: 200px;">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

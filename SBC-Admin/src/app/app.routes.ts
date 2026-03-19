@@ -3,6 +3,8 @@ import { Sidebar } from './Component/sidebar/sidebar';
 import { Dashboard } from './Component/dashboard/dashboard';
 import { Enquiries } from './Component/enquiries/enquiries';
 import { Usermanagement } from './Component/usermanagement/usermanagement';
+import { Slider } from './Component/slider/slider';
+import { Team } from './Component/team/team';
 
 export const routes: Routes = [
     {
@@ -20,5 +22,13 @@ export const routes: Routes = [
     {
         path:"User Management",
         component:Usermanagement
+    },
+    {
+        path:"Team",
+        component:Team
+    },
+    {
+        path:"Slider",
+        component:Slider
     }
 ];
