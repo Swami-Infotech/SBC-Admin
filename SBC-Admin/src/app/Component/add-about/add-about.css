@@ -1,0 +1,136 @@
+/* header css start */
+.header {
+    background-color: #F7F7F7;
+    padding: 25px;
+    border-radius: 30px;
+    margin-bottom: 25px;
+}
+
+.heder-title h2 {
+    font-family: var(--Secondary-font);
+    font-weight: 500;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    background-color: #f5f5f5;
+    /* margin: 0 0 0 30%; */
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    flex: 1;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.search-icon {
+    font-size: 18px;
+    color: #888;
+}
+
+.add-btn .btn {
+    background-color: #101729;
+    color: #fff;
+    padding: 10px 50px;
+    border-radius: 50px;
+}
+
+/* header css end */
+
+
+.about-container {
+    border: 1px solid #666666;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.about-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+}
+
+.editor {
+    border-radius: 10px;
+}
+
+.editor-toolbar {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-bottom: none;
+    background: #eee;
+}
+
+.editor-toolbar button {
+    margin-right: 5px;
+}
+
+.image-section {
+    margin-top: 10px;
+}
+
+.image-card {
+    width: 306px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.image-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-upload {
+    background: #0f172a;
+    color: white;
+    border-radius: 20px;
+    padding: 6px 15px;
+    border: none;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-save {
+    background: #0f172a;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: none;
+}
+
+.btn-close {
+    background: #e5e7eb;
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: none;
+}

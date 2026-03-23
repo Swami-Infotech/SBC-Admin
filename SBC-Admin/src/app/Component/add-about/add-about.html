@@ -1,0 +1,62 @@
+<!-- header section start -->
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="heder-title">
+                    <h2>Add About Us</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header section end -->
+
+<!-- about section start -->
+<div class="about-container">
+
+    <!-- Header -->
+    <div class="about-header">
+        <h3>About Us Section</h3>
+    </div>
+
+    <!-- Title -->
+    <div class="form-group">
+        <label>Title</label>
+        <input type="text" class="form-control" placeholder="Sub Text To Enter Title" [(ngModel)]="title">
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+        <label>Description</label>
+
+        <!-- Toolbar (basic UI) -->
+        <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+
+        <ngx-editor [editor]="editor" [(ngModel)]="html" placeholder="Type here...">
+        </ngx-editor>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="image-section">
+        <label>Image 1</label>
+
+        <div class="image-card">
+            <img *ngIf="previewImage" [src]="previewImage" />
+
+            <input type="file" (change)="onFileSelect($event)" hidden #fileInput>
+
+            <button class="btn-upload" (click)="fileInput.click()">Choose File</button>
+
+            <p>{{ fileName || 'No File Chosen' }}</p>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="action-buttons">
+        <button class="btn-save" (click)="save()">Save Changes</button>
+        <button class="btn-close">Close</button>
+    </div>
+
+</div>
+<!-- about section end -->

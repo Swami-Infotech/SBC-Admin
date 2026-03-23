@@ -1,0 +1,90 @@
+<!-- header section start -->
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="heder-title">
+                    <h2>About Us</h2>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" placeholder="Search..." />
+                    </div>
+                    <div class="add-btn ms-3 pe-auto" (click)="Addabout()">
+                        <button class="btn">Add About</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header section end -->
+
+<!-- ride management table start -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td> 1 </td>
+                            <td>
+                                <img src="../../../assets/logo/event.avif" alt="">
+                            </td>
+                            <td>Sunday Ride</td>
+                            <td>Start Your Day With An Energetic 25 KM Morning Ride Through...</td>
+                            <td class="action-btns">
+                                <i class="bi bi-eye" (click)="redirect()"></i>
+                                <i class="bi bi-pencil"></i>
+                                <i class="bi bi-trash-fill delete"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 2 </td>
+                            <td>
+                                <img src="../../../assets/logo/event.avif" alt="">
+                            </td>
+                            <td>Sunday Ride</td>
+                            <td>Start Your Day With An Energetic 25 KM Morning Ride Through...</td>
+                            <td class="action-btns">
+                                <i class="bi bi-eye" (click)="redirect()"></i>
+                                <i class="bi bi-pencil"></i>
+                                <i class="bi bi-trash-fill delete"></i>
+                            </td>
+                        </tr>
+                       <tr>
+                            <td> 3 </td>
+                            <td>
+                                <img src="../../../assets/logo/event.avif" alt="">
+                            </td>
+                            <td>Sunday Ride</td>
+                            <td>Start Your Day With An Energetic 25 KM Morning Ride Through...</td>
+                            <td class="action-btns">
+                                <i class="bi bi-eye" (click)="redirect()"></i>
+                                <i class="bi bi-pencil"></i>
+                                <i class="bi bi-trash-fill delete"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ride management table end -->

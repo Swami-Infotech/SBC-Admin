@@ -1,0 +1,139 @@
+<!-- header section start -->
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="heder-title">
+                    <h2>Event Details</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header section end -->
+
+<!-- event details section start -->
+<section class="event-detaiils">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="image-card">
+
+                    <img [src]="selectedImage" class="main-image" />
+
+                    <div class="thumbs d-flex mt-3">
+                        <img *ngFor="let img of images" [src]="img" (click)="selectImage(img)" class="thumb" />
+
+                        <div class="thumb add-more">+</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE (DETAILS FORM) -->
+            <div class="col-lg-7">
+                <div class="details-card">
+
+                    <div class="details-title">
+                        <h5>Sunday Ride</h5>
+                    </div>
+
+                    <p class="description">
+                        Here riders come together to explore beautiful routes, enjoy fresh air,
+                        and share the passion for cycling. This ride is perfect for both beginners
+                        and experienced riders looking to connect with fellow enthusiasts.
+                    </p>
+
+                    <!-- Location -->
+                    <div class="input-box">
+                        <i class="bi bi-geo-alt"></i>
+                        <span>
+                            Sarthana Nature Park Gate Sarthana Jakatnaka Road Opp. Zoo Garden Surat, Gujarat -395006
+                            India
+                        </span>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="input-box">
+                        <i class="bi bi-calendar"></i>
+                        <input type="date" class="form-control border-0" />
+                    </div>
+
+                    <!-- Start Time -->
+                    <div class="input-box">
+                        <i class="bi bi-clock"></i>
+                        <input type="time" class="form-control border-0" />
+                    </div>
+
+                    <!-- End Time -->
+                    <div class="input-box">
+                        <i class="bi bi-clock-history"></i>
+                        <input type="time" class="form-control border-0" />
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- join member list start -->
+            <div class="col-lg-12">
+                <div class="title">
+                    <h5>Joining Members</h5>
+                </div>
+                <div class="table-container">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>User Name</th>
+                                <th>Phone Number</th>
+                                <th>Is Member</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td> 1 </td>
+                                <td>
+                                   John Mehta
+                                </td>
+                                <td>+91 9876543210</td>
+                                <td>Yes</td>
+                                <td class="action-btns">
+                                    <i class="bi bi-eye"></i>
+                                    <i class="bi bi-trash-fill delete"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 2 </td>
+                                <td>
+                                   John Mehta
+                                </td>
+                                <td>+91 9876543210</td>
+                                <td>Yes</td>
+                                <td class="action-btns">
+                                    <i class="bi bi-eye"></i>
+                                    <i class="bi bi-trash-fill delete"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 3 </td>
+                                <td>
+                                   John Mehta
+                                </td>
+                                <td>+91 9876543210</td>
+                                <td>Yes</td>
+                                <td class="action-btns">
+                                    <i class="bi bi-eye"></i>
+                                    <i class="bi bi-trash-fill delete"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- join member list end -->
+        </div>
+    </div>
+</section>
+<!-- event details section end -->

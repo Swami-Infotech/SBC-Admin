@@ -3,19 +3,27 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-slider',
+  selector: 'app-ride-management',
   imports: [FormsModule,CommonModule],
-  templateUrl: './slider.html',
-  styleUrl: './slider.css',
+  templateUrl: './ride-management.html',
+  styleUrl: './ride-management.css',
 })
-export class Slider {
+export class RideManagement {
+
+
    isModalOpen = false;
   showPassword = false;
 
-   OpenModal() {
+  OpenModal() {
     this.isModalOpen = true;
   }
-  closeModal(){
+
+
+  closeModal() {
     this.isModalOpen = false;
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 }

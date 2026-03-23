@@ -1,0 +1,189 @@
+<!-- header section start -->
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="heder-title">
+                    <h2>Event Management</h2>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" placeholder="Search..." />
+                    </div>
+                    <div class="add-btn ms-3 pe-auto" (click)="OpenModal()">
+                        <button class="btn">Add Event</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header section end -->
+
+<!-- ride management table start -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Image</th>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td> 1 </td>
+                            <td>
+                                <img src="../../../assets/logo/event.avif" alt="">
+                            </td>
+                            <td>Sunday Ride</td>
+                            <td>12 Jun 2026</td>
+                            <td>Surat</td>
+                            <td>6 PM</td>
+                            <td class="action-btns">
+                                <i class="bi bi-eye" (click)="redirect()"></i>
+                                <i class="bi bi-pencil"></i>
+                                <i class="bi bi-trash-fill delete"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 2 </td>
+                            <td>
+                                <img src="../../../assets/logo/event.avif" alt="">
+                            </td>
+                            <td>Sunday Ride</td>
+                            <td>12 Jun 2026</td>
+                            <td>Surat</td>
+                            <td>6 PM</td>
+                            <td class="action-btns">
+                                <i class="bi bi-eye" (click)="redirect()"></i>
+                                <i class="bi bi-pencil"></i>
+                                <i class="bi bi-trash-fill delete"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 3 </td>
+                            <td>
+                                <img src="../../../assets/logo/event.avif" alt="">
+                            </td>
+                            <td>Sunday Ride</td>
+                            <td>12 Jun 2026</td>
+                            <td>Surat</td>
+                            <td>6 PM</td>
+                            <td class="action-btns">
+                                <i class="bi bi-eye" (click)="redirect()"></i>
+                                <i class="bi bi-pencil"></i>
+                                <i class="bi bi-trash-fill delete"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ride management table end -->
+
+<!-- add ride modal start -->
+<div class="modal" [class.show]="isModalOpen" [style.display]="isModalOpen ? 'block' : 'none'">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5>Add Event</h5>
+                <button class="btn-close" (click)="closeModal()">✕</button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+                <form class="user-form">
+
+                    <div class="row">
+
+                        <!-- image -->
+                        <div class="col-md-6">
+                            <label>Image</label>
+                            <div class="custom-input">
+                                <i class="bi bi-card-image"></i>
+                                <input type="file" placeholder="Upload Image">
+                            </div>
+                        </div>
+
+                        <!-- event name -->
+                        <div class="col-md-6">
+                            <label>Event Name</label>
+                            <div class="custom-input">
+                                <i class="bi bi-calendar-check-fill"></i>
+                                <input type="text" placeholder="Enter Event name">
+                            </div>
+                        </div>
+
+                        <!-- date -->
+                        <div class="col-md-6">
+                            <label>Date</label>
+                            <div class="custom-input">
+                                <i class="bi bi-calendar-check-fill"></i>
+                                <input type="datetime-local" placeholder="Select date">
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="col-md-6">
+                            <label>Start Location</label>
+                            <div class="custom-input">
+                                <i class="bi bi-pin-map-fill"></i>
+                                <input type="text" placeholder="City-Hill">
+                            </div>
+                        </div>
+
+                        <!-- time -->
+                        <div class="col-md-6">
+                            <label>Time</label>
+                            <div class="custom-input">
+                                <i class="bi bi-clock-fill"></i>
+                                <input type="datetime-local" placeholder="Select time">
+                            </div>
+                        </div>
+
+                        <!-- description -->
+                        <div class="col-md-6">
+                            <label>Short Description</label>
+                            <div class="custom-input">
+                                <i class="bi bi-card-heading"></i>
+                                <input type="text" placeholder="Enter Short Description">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+                <button class="save-btn">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- SINGLE BACKDROP -->
+<div class="modal-backdrop" *ngIf="isModalOpen"></div>
+<!-- add ride modal end -->

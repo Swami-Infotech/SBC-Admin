@@ -1,0 +1,247 @@
+/* header css start */
+.header {
+    background-color: #F7F7F7;
+    padding: 25px;
+    border-radius: 30px;
+    margin-bottom: 25px;
+}
+
+.heder-title h2 {
+    font-family: var(--Secondary-font);
+    font-weight: 500;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    background-color: #f5f5f5;
+    /* margin: 0 0 0 30%; */
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    flex: 1;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.search-icon {
+    font-size: 18px;
+    color: #888;
+}
+.add-btn .btn {
+    background-color: #101729;
+    color: #fff;
+    padding: 10px 50px;
+    border-radius: 50px;
+}
+/* header css end */
+
+/* event details css start */
+.event-detaiils {
+  border: 1px solid #666666;
+  border-radius: 16px;
+  margin: 15px;
+}
+
+/* LEFT */
+.image-card {
+  padding: 15px;
+  border-radius: 16px;
+}
+
+.main-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.thumbs {
+  gap: 10px;
+}
+
+.thumb {
+  width: 55px;
+  height: 55px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.thumb:hover {
+  border-color: #000;
+}
+
+.add-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* RIGHT */
+.details-card {
+  background: #f5f5f578;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.details-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+  border: 1px solid #f5f5f578;
+}
+.details-title h5{
+    border: 1px solid #666666;
+    padding: 12px;
+    border-radius: 20px;
+    color: #101729;
+    font-family: var(--Primary-font);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.description {
+  font-size: 14px;
+  color: #666666;
+  border: 1px solid #666666;
+  padding: 12px;
+  border-radius: 20px;
+  font-family: var(--Primary-font);
+  font-weight: 500;
+}
+
+/* INPUT BOX STYLE */
+.input-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 7px 15px;
+  margin-top: 12px;
+  border: 1px solid #6666;
+}
+
+.input-box i {
+  font-size: 16px;
+  color: #666;
+}
+
+.input-box input {
+  width: 100%;
+  outline: none;
+  box-shadow: none;
+}
+/* event details css end */
+
+.table-container {
+    background: #f4f5f7;
+    padding: 0 10px;
+    border-radius: 15px;
+}
+
+/* Table */
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+/* Header */
+.custom-table thead tr {
+    border-radius: 10px;
+    font-family: var(--Primary-font);
+    font-weight: 600;
+}
+
+.custom-table th {
+    padding: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #101729;
+    text-align: left;
+}
+
+/* Body rows */
+.custom-table tbody tr {
+    background: #ffffff;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.custom-table tbody tr:hover {
+    transform: scale(1.01);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Cells */
+.custom-table td {
+    padding: 12px;
+    font-size: 14px;
+    color: #101729;
+    font-family: var(--Primary-font);
+    font-weight: 600;
+}
+
+.custom-table td img {
+    width: 50px;
+    height: 50px
+}
+
+/* Rounded row effect */
+.custom-table tbody tr td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.custom-table tbody tr td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Actions */
+
+
+/* Icons */
+.action-btns i {
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0 5px;
+}
+
+/* View */
+.view {
+    color: #4a5568;
+}
+
+.view:hover {
+    color: #007bff;
+}
+
+/* Delete */
+.delete {
+    color: #e53e3e;
+}
+
+.delete:hover {
+    color: #c53030;
+}
+.title{
+    color: #101729;
+    font-family: var(--Primary-font);
+    font-weight: 600;
+}
+
+/* table css end */

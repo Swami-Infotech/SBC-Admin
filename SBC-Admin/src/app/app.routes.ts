@@ -6,6 +6,12 @@ import { Usermanagement } from './Component/usermanagement/usermanagement';
 import { Slider } from './Component/slider/slider';
 import { Team } from './Component/team/team';
 import { Userdetails } from './Component/userdetails/userdetails';
+import { RideManagement } from './Component/ride-management/ride-management';
+import { Eventmanagement } from './Component/eventmanagement/eventmanagement';
+import { Eventdetails } from './Component/eventdetails/eventdetails';
+import { Gallery } from './Component/gallery/gallery';
+import { Aboutus } from './Component/aboutus/aboutus';
+import { AddAbout } from './Component/add-about/add-about';
 
 export const routes: Routes = [
     {
@@ -21,27 +27,61 @@ export const routes: Routes = [
         component: Enquiries
     },
     {
-        path:"User Management",
-        component:Usermanagement
+        path: "User Management",
+        component: Usermanagement
     },
     {
-        path:"Team",
-        component:Team
+        path: "Team",
+        component: Team
     },
     {
-        path:"Slider",
-        component:Slider
+        path: "Slider",
+        component: Slider
     },
-       {
-        path:"UserManagement",
-        children:[
+    {
+        path: "UserManagement",
+        children: [
             {
-                path:"",
-                component:Usermanagement
+                path: "",
+                component: Usermanagement
             },
             {
-                path:"Userdetails",
-                component:Userdetails
+                path: "Userdetails",
+                component: Userdetails
+            }
+        ]
+    },
+    {
+        path: "RideManagement",
+        component: RideManagement
+    },
+    {
+        path: "eventmanagement",
+        children: [
+            {
+                path: '',
+                component: Eventmanagement
+            },
+            {
+                path: "eventdetails",
+                component: Eventdetails
+            }
+        ]
+    },
+    {
+        path: "gallery",
+        component: Gallery
+    },
+    {
+        path: "AboutUs",
+        children: [
+            {
+                path: "",
+                component: Aboutus
+            },
+            {
+                path:"AddAbout",
+                component:AddAbout
             }
         ]
     }

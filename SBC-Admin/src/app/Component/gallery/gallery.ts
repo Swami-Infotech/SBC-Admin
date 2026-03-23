@@ -1,21 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-slider',
+  selector: 'app-gallery',
   imports: [FormsModule,CommonModule],
-  templateUrl: './slider.html',
-  styleUrl: './slider.css',
+  templateUrl: './gallery.html',
+  styleUrl: './gallery.css',
 })
-export class Slider {
+export class Gallery {
    isModalOpen = false;
   showPassword = false;
 
-   OpenModal() {
+  constructor(private route:Router){}
+
+  OpenModal() {
     this.isModalOpen = true;
   }
-  closeModal(){
+
+
+  closeModal() {
     this.isModalOpen = false;
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 }
