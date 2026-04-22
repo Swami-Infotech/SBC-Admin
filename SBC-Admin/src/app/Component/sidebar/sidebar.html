@@ -62,7 +62,14 @@
           <span *ngIf="isExpanded">Inquiry</span>
         </a>
       </li>
-      
+
+      <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/RideSefty" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('Customer')"></i>
+          <span *ngIf="isExpanded">Ride Sefty</span>
+        </a>
+      </li>
+
     </ul>
 
     <div class="sidebar-footer">

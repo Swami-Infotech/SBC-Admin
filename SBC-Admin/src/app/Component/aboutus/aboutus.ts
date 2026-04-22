@@ -1,34 +1,72 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SBC } from '../../Service/sbc';
+import { ToastrNotificationService } from '../../Common/toastr-notification.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-aboutus',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './aboutus.html',
   styleUrl: './aboutus.css',
 })
-export class Aboutus {
-   isModalOpen = false;
-  showPassword = false;
+export class Aboutus implements OnInit {
 
-  constructor(private route:Router){}
+  about: any;
 
-Addabout(){
-  this.route.navigate(['/AboutUs/AddAbout'])
-}
+  constructor(private route: Router, private service: SBC, private toast: ToastrNotificationService) { }
 
-
-  closeModal() {
-    this.isModalOpen = false;
+  ngOnInit(): void {
+    this.getalldata();
   }
 
-  togglePassword() {
-    this.showPassword = !this.showPassword;
+  Addabout() {
+    this.route.navigate(['/AboutUs/AddAbout'])
   }
 
-  redirect(){
-
+  Editabout(d: any) {
+    this.route.navigate(['/AboutUs/AddAbout'], { state: { data: d } });
   }
+
+  getalldata() {
+    this.service.getallabout().subscribe(
+      (resp: any) => {
+        if (resp.status) {
+          this.about = resp.data;
+          this.toast.showSuccess(resp.message)
+        } else {
+          this.toast.showError(resp.message)
+        }
+      }
+    )
+  }
+
+  deleteabout(aboutID: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.service.deleteabout(aboutID).subscribe(
+          (resp: any) => {
+            this.toast.showSuccess(resp.message);
+            this.getalldata();
+          },
+          (err: any) => {
+            console.log(err);
+            this.toast.showError('Delete failed');
+          }
+        );
+      }
+    });
+  }
+
+
+
 }

@@ -1,0 +1,107 @@
+/* Tabs Styling */
+.tab-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: inline-block;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.tab-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #64748b;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.tab-btn:hover {
+    background: #f1f5f9;
+    color: #101729;
+}
+
+.tab-btn.active {
+    background: #101729;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(16, 23, 41, 0.2);
+}
+
+/* Header */
+.title {
+    font-size: 24px;
+    color: #101729;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* Table Card */
+.table-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.custom-table th {
+    background: #f8fafc;
+    border: none;
+    color: #475569;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px;
+}
+
+.custom-table tbody tr {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+    background: #fdfdfd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.custom-table td {
+    padding: 15px;
+    vertical-align: middle;
+    border: none;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+/* Buttons */
+.btn-delete {
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    background: #ef4444;
+    color: #fff;
+    transform: scale(1.1);
+}

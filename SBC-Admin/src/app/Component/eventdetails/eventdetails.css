@@ -243,5 +243,11 @@
     font-family: var(--Primary-font);
     font-weight: 600;
 }
+.btn-dele{
+    background-color: #ECCCCC;
+    border: 2px solid #E53E3E;
+    padding: 8px 30px;
+    border-radius: 50px;
+}
 
 /* table css end */

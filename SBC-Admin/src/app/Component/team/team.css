@@ -344,3 +344,12 @@
   }
 }
 /* modal css end */
+
+.preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}

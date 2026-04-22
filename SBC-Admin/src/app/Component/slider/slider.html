@@ -39,42 +39,18 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td> 1 </td>
+                            <tr *ngFor="let d of slider;let i = index">
+                                <td> {{i + 1}} </td>
                                 <td>
-                                    <img src="../../../assets/logo/team1.png" alt="">
+                                    <img [src]="d.sliderImage" alt="">
                                 </td>
-                                <td>www.google.com</td>
+                                <td>{{d.redirectTo}}</td>
                                 <td class="action-btns">
-                                    <i class="bi bi-eye-fill view"></i>
-                                    <i class="bi bi-pencil"></i>
-                                    <i class="bi bi-trash-fill delete"></i>
+                                    <i class="bi bi-pencil" (click)="updateslider(d)"></i>
+                                    <i class="bi bi-trash-fill delete" (click)="deleteslider(d.sliderID)"></i>
                                 </td>
                             </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td>
-                                    <img src="../../../assets/logo/team1.png" alt="">
-                                </td>
-                                <td>www.google.com</td>
-                                <td class="action-btns">
-                                    <i class="bi bi-eye-fill view pe-auto"></i>
-                                    <i class="bi bi-pencil"></i>
-                                    <i class="bi bi-trash-fill delete"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> 3 </td>
-                                <td>
-                                    <img src="../../../assets/logo/team1.png" alt="">
-                                </td>
-                                <td>www.google.com</td>
-                                <td class="action-btns">
-                                    <i class="bi bi-eye-fill view"></i>
-                                    <i class="bi bi-pencil"></i>
-                                    <i class="bi bi-trash-fill delete"></i>
-                                </td>
-                            </tr>
+                           
                         </tbody>
                     </table>
                 </div>
@@ -98,7 +74,7 @@
 
             <!-- BODY -->
             <div class="modal-body">
-                <form class="user-form">
+                <form class="user-form" [formGroup]="SliderForm">
 
                     <div class="row">
 
@@ -107,7 +83,14 @@
                             <label>Image</label>
                             <div class="custom-input">
                                <i class="bi bi-card-image"></i>
-                                <input type="text" placeholder="slider Image">
+                                <input type="file" placeholder="slider Image" (change)="fileChangeEvents($event)">
+                            </div>
+                        </div>
+                         <!-- image preview -->
+                        <div class="col-md-12 mt-3" *ngIf="SliderForm.value.sliderImage">
+                            <label>Preview</label>
+                            <div class="image-preview">
+                                <img [src]="SliderForm.value.sliderImage" alt="Preview" class="img-fluid rounded shadow-sm">
                             </div>
                         </div>
 
@@ -116,7 +99,7 @@
                             <label>Redirect To</label>
                             <div class="custom-input">
                                <i class="bi bi-sign-turn-slight-right-fill"></i>
-                                <input type="text" placeholder="Select Date">
+                                <input type="text" placeholder="Select Date" formControlName="redirectTo">
                             </div>
                         </div>
 
@@ -127,7 +110,7 @@
             <!-- FOOTER -->
             <div class="modal-footer">
                 <button class="cancel-btn" (click)="closeModal()">Cancel</button>
-                <button class="save-btn">Save</button>
+                <button class="save-btn" (click)="AddSlider()">Save</button>
             </div>
 
         </div>

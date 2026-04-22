@@ -178,6 +178,12 @@
   color: #c53030;
 }
 
+.ride-img{
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+}
+
 
 
 /* dashboard css end */

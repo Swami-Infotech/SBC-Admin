@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="heder-title">
-                    <h2>Add About Us</h2>
+                    <h2>{{isEditModal ? 'Update' : 'Add'}} About Us</h2>
                 </div>
             </div>
         </div>
@@ -20,42 +20,65 @@
         <h3>About Us Section</h3>
     </div>
 
-    <!-- Title -->
-    <div class="form-group">
-        <label>Title</label>
-        <input type="text" class="form-control" placeholder="Sub Text To Enter Title" [(ngModel)]="title">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group mb-3">
+                <label>About Us Type</label>
+                <select class="form-control" [class.is-invalid]="submitted && aboutusType == 0" [(ngModel)]="aboutusType">
+                    <option [value]="0">Select Type</option>
+                    <option *ngFor="let t of aboutusTypes" [value]="t.id">{{t.name}}</option>
+                </select>
+                <div class="text-danger small mt-1" *ngIf="submitted && aboutusType == 0">
+                    Please select a type
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group mb-3">
+                <label>Data Place</label>
+                <select class="form-control" [(ngModel)]="dataPlace">
+                    <option [value]="0">Select Place</option>
+                    <option *ngFor="let p of dataPlaces" [value]="p.id">{{p.name}}</option>
+                </select>
+            </div>
+        </div>
     </div>
 
-    <!-- Description -->
-    <div class="form-group">
-        <label>Description</label>
+    <!-- Key -->
+    <div class="form-group mb-3">
+        <label>Key (Title)</label>
+        <input type="text" class="form-control" [class.is-invalid]="submitted && !key" placeholder="Enter Key / Title" [(ngModel)]="key">
+        <div class="text-danger small mt-1" *ngIf="submitted && !key">
+            Key is required
+        </div>
+    </div>
 
-        <!-- Toolbar (basic UI) -->
-        <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
-
-        <ngx-editor [editor]="editor" [(ngModel)]="html" placeholder="Type here...">
+    <!-- Description (Value) - Show only if Text is selected (ID: 0) -->
+    <div class="form-group mb-3" *ngIf="aboutusType == 0">
+        <label>Value (Description)</label>
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+        <ngx-editor [editor]="editor" [(ngModel)]="value" placeholder="Type content here...">
         </ngx-editor>
     </div>
 
-    <!-- Image Upload -->
-    <div class="image-section">
-        <label>Image 1</label>
-
+    <!-- Image Upload (Alternative Value) - Show if Image (ID: 1) or Video (ID: 2) is selected -->
+    <div class="image-section mb-4" *ngIf="aboutusType == 1 || aboutusType == 2">
+        <label>{{aboutusType == 1 ? 'Upload Image' : 'Upload Video'}} (Value)</label>
         <div class="image-card">
-            <img *ngIf="previewImage" [src]="previewImage" />
-
-            <input type="file" (change)="onFileSelect($event)" hidden #fileInput>
-
+            <img *ngIf="previewImage && aboutusType == 1" [src]="previewImage" class="preview-img-box" />
+            <div *ngIf="previewImage && aboutusType == 2" class="preview-video-placeholder">
+                <i class="bi bi-play-circle"></i> Video Selected: {{fileName}}
+            </div>
+            <input type="file" (change)="onFileSelect($event)" hidden #fileInput [accept]="aboutusType == 1 ? 'image/*' : 'video/*'">
             <button class="btn-upload" (click)="fileInput.click()">Choose File</button>
-
             <p>{{ fileName || 'No File Chosen' }}</p>
         </div>
     </div>
 
     <!-- Buttons -->
-    <div class="action-buttons">
-        <button class="btn-save" (click)="save()">Save Changes</button>
-        <button class="btn-close">Close</button>
+    <div class="action-buttons d-flex gap-2">
+        <button class="btn-save" (click)="save()">{{isEditModal ? 'Update' : 'Save Changes'}}</button>
+        <button class="btn-cancel" (click)="redirect()">Cancel</button>
     </div>
 
 </div>

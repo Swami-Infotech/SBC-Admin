@@ -1,63 +1,39 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SBC } from './Service/sbc';
 import { LoaderService } from './Service/loader.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Sidebar } from './Component/sidebar/sidebar';
+import { Sidebar } from "./Component/sidebar/sidebar";
+import { LoaderComponent } from './Component/loader/loader';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,
     FormsModule,
-    CommonModule,
-    Sidebar],
+    CommonModule, Sidebar, LoaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnInit {
 
-  isSidebarExpanded = true;
-  isLoggedIn = false;
-  isLoading!: boolean;
-  isHomePage = false;
+   protected readonly title = signal('VarahVerse-Admin');
+  isLoginPage = signal(false);
+  private router = inject(Router);
+  public loader = inject(LoaderService);
 
-  constructor(
-    private service: SBC,
-    private loaderService: LoaderService,
-    private router: Router
-  ) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        const url = this.router.url;
-        this.isLoggedIn = !url.startsWith('/login');
-      }
+  constructor() {
+    // Initial check
+    this.isLoginPage.set(this.router.url === '/Login' || window.location.pathname === '/Login');
+    
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.isLoginPage.set(event.url === '/Login' || event.urlAfterRedirects === '/Login');
     });
   }
-
   ngOnInit(): void {
-    this.service.isExpanded$.subscribe((expanded) => {
-      this.isSidebarExpanded = expanded;
-
-      this.loaderService.isLoading.subscribe((loading: boolean) => {
-        this.isLoading = loading;
-      });
-    });
-
-    this.service.isLoggedIn$.subscribe((loggedIn) => {
-      this.isLoggedIn = loggedIn;
-    });
-
-    var loading = sessionStorage.getItem('firstLoginDone');
-    if (loading == 'false') {
-      window.location.reload();
-    }
-  }
-
-  onSidebarToggle() {
-    this.service.toggleSidebar();
-    if (!this.isHomePage) {
-      this.isSidebarExpanded = this.isSidebarExpanded;
-    }
+    throw new Error('Method not implemented.');
   }
 }

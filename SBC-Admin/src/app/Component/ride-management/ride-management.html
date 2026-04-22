@@ -39,63 +39,89 @@
                             <th>Time</th>
                             <th>Route</th>
                             <th>Location</th>
-                            <th>Distance</th>
+                            <th>Total Km</th>
                             <th>Members joined</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td> 1 </td>
-                            <td>
-                                Hill Ride
-                            </td>
-                            <td>12 Jun 2026</td>
-                            <td>6 PM</td>
-                            <td>City Hill</td>
-                            <td>Surat</td>
-                            <td>120KM</td>
-                            <td>50</td>
+                        <tr *ngFor="let ride of rideList; let i = index">
+                            <td> {{  i + 1 }} </td>
+                            <td>{{ ride.rideTitle }}</td>
+                            <td>{{ ride.rideDate | date:'dd MMM yyyy' }}</td>
+                            <td>{{ ride.rideDate| date:'h:mm a' }}</td>
+                            <td>{{ride.startLocation}} - {{ride.endLocation}}</td>
+                            <td>{{ ride.startLocation }}</td>
+                            <td>{{ ride.rideTotalKms }} KM</td>
+                            <td>{{ride.totalJoinedMembers}}</td> 
                             <td class="action-btns">
-                                <i class="bi bi-pencil"></i>
-                                <i class="bi bi-trash-fill delete"></i>
+                                <i class="bi bi-eye" (click)="ViewRide(ride.rideID)"></i>
+                                <i class="bi bi-pencil" (click)="OpenUpdateModal(ride)"></i>
+                                <i class="bi bi-trash-fill delete" (click)="deleteride(ride.rideID)"></i>
                             </td>
                         </tr>
-                        <tr>
-                            <td> 2 </td>
-                            <td>
-                                Hill Ride
-                            </td>
-                            <td>12 Jun 2026</td>
-                            <td>6 PM</td>
-                            <td>City Hill</td>
-                            <td>Surat</td>
-                            <td>120KM</td>
-                            <td>50</td>
-                            <td class="action-btns">
-                                <i class="bi bi-pencil"></i>
-                                <i class="bi bi-trash-fill delete"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> 3 </td>
-                            <td>
-                                Hill Ride
-                            </td>
-                            <td>12 Jun 2026</td>
-                            <td>6 PM</td>
-                            <td>City Hill</td>
-                            <td>Surat</td>
-                            <td>120KM</td>
-                            <td>50</td>
-                            <td class="action-btns">
-                                <i class="bi bi-pencil"></i>
-                                <i class="bi bi-trash-fill delete"></i>
-                            </td>
+                        <tr *ngIf="rideList.length === 0">
+                            <td colspan="9" class="text-center py-4">No rides found</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="pagination-container d-flex flex-wrap justify-content-between align-items-center mt-4">
+                <div class="pagination-info text-muted">
+                    Showing <span class="fw-bold">{{ pageSize }}</span> 
+                    to <span class="fw-bold">{{  totalRecords }}</span> 
+                    of <span class="fw-bold">{{ totalRecords }}</span> entries
+                </div>
+                
+                <nav aria-label="Page navigation" class="mt-2 mt-md-0">
+                    <ul class="pagination pagination-rounded mb-0">
+                        <!-- First Page -->
+                        <li class="page-item" [class.disabled]="pageNumber === 1">
+                            <a class="page-link" (click)="changePage(1)" title="First Page">
+                                <i class="bi bi-chevron-double-left"></i>
+                            </a>
+                        </li>
+                        
+                        <!-- Previous Page -->
+                        <li class="page-item" [class.disabled]="pageNumber === 1">
+                            <a class="page-link" (click)="previousPage()" aria-label="Previous">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </li>
+
+                        <!-- First Page Ellipsis -->
+                        <li class="page-item" *ngIf="showFirstEllipsis" class="disabled">
+                            <span class="page-link">...</span>
+                        </li>
+
+                        <!-- Page Numbers -->
+                        <li class="page-item" *ngFor="let page of getPages()" [class.active]="pageNumber === page">
+                            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+                        </li>
+
+                        <!-- Last Page Ellipsis -->
+                        <li class="page-item" *ngIf="showLastEllipsis" class="disabled">
+                            <span class="page-link">...</span>
+                        </li>
+
+                        <!-- Next Page -->
+                        <li class="page-item" [class.disabled]="pageNumber === totalPages || totalRecords === 0">
+                            <a class="page-link" (click)="nextPage()" aria-label="Next">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+
+                        <!-- Last Page -->
+                        <li class="page-item" [class.disabled]="pageNumber === totalPages || totalRecords === 0">
+                            <a class="page-link" (click)="changePage(totalPages)" title="Last Page">
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -110,80 +136,133 @@
 
             <!-- HEADER -->
             <div class="modal-header">
-                <h5>Add Ride</h5>
+                <h5>{{ isEditMode ? 'Update Ride' : 'Add Ride' }}</h5>
                 <button class="btn-close" (click)="closeModal()">✕</button>
             </div>
 
             <!-- BODY -->
-            <div class="modal-body">
-                <form class="user-form">
-
-                    <div class="row">
-
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto; overflow-x: hidden;">
+                <form class="user-form px-2" [formGroup]="RideForm">
+                    <div class="row g-3">
                         <!-- Ride Name -->
-                        <div class="col-md-6">
-                            <label>Ride Name</label>
-                            <div class="custom-input">
-                                <i class="bi bi-bicycle"></i>
-                                <input type="text" placeholder="Hill Ride">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold small">Ride Title</label>
+                            <div class="input-group shadow-sm border rounded overflow-hidden">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-bicycle"></i></span>
+                                <input type="text" class="form-control border-0" [class.is-invalid]="RideForm.get('rideTitle')?.touched && RideForm.get('rideTitle')?.invalid" placeholder="Enter Ride Title" formControlName="rideTitle">
+                            </div>
+                            <div class="text-danger small mt-1 ms-1" *ngIf="RideForm.get('rideTitle')?.touched && RideForm.get('rideTitle')?.invalid">
+                                Ride Title is required
                             </div>
                         </div>
 
                         <!-- Date -->
-                        <div class="col-md-6">
-                            <label>Date</label>
-                            <div class="custom-input">
-                                <i class="bi bi-calendar-check-fill"></i>
-                                <input type="datetime-local" placeholder="Select Date">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold small">Ride Date</label>
+                            <div class="input-group shadow-sm border rounded overflow-hidden">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-date"></i></span>
+                                <input type="datetime-local" class="form-control border-0" [class.is-invalid]="RideForm.get('rideDate')?.touched && RideForm.get('rideDate')?.invalid" formControlName="rideDate">
                             </div>
-                        </div>
-
-                        <!-- Time -->
-                        <div class="col-md-6">
-                            <label>Time</label>
-                            <div class="custom-input">
-                                <i class="bi bi-clock-fill"></i>
-                                <input type="datetime-local" placeholder="Select Time">
+                            <div class="text-danger small mt-1 ms-1" *ngIf="RideForm.get('rideDate')?.touched && RideForm.get('rideDate')?.invalid">
+                                Ride Date is required
                             </div>
                         </div>
 
                         <!-- Location -->
-                        <div class="col-md-6">
-                            <label>Start Location</label>
-                            <div class="custom-input">
-                                <i class="bi bi-pin-map-fill"></i>
-                                <input type="text" placeholder="City-Hill">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold small">Start Location</label>
+                            <div class="input-group shadow-sm border rounded overflow-hidden">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-geo-alt"></i></span>
+                                <input type="text" class="form-control border-0" [class.is-invalid]="RideForm.get('startLocation')?.touched && RideForm.get('startLocation')?.invalid" placeholder="Start Point" formControlName="startLocation">
+                            </div>
+                            <div class="text-danger small mt-1 ms-1" *ngIf="RideForm.get('startLocation')?.touched && RideForm.get('startLocation')?.invalid">
+                                Start Location is required
                             </div>
                         </div>
 
                         <!-- end location -->
-                        <div class="col-md-6">
-                            <label>End Location</label>
-                            <div class="custom-input">
-                                <i class="bi bi-pin-map-fill"></i>
-                                <input type="text" placeholder="City-Hill">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold small">End Location</label>
+                            <div class="input-group shadow-sm border rounded overflow-hidden">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-geo"></i></span>
+                                <input type="text" class="form-control border-0" [class.is-invalid]="RideForm.get('endLocation')?.touched && RideForm.get('endLocation')?.invalid" placeholder="End Point" formControlName="endLocation">
+                            </div>
+                            <div class="text-danger small mt-1 ms-1" *ngIf="RideForm.get('endLocation')?.touched && RideForm.get('endLocation')?.invalid">
+                                End Location is required
                             </div>
                         </div>
 
                         <!-- distance  -->
-                        <div class="col-md-6">
-                            <label>Distance</label>
-                            <div class="custom-input">
-                                <i class="bi bi-pin-map-fill"></i>
-                                <input type="text" placeholder="120 km">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold small">Total KMs</label>
+                            <div class="input-group shadow-sm border rounded overflow-hidden">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-speedometer2"></i></span>
+                                <input type="number" class="form-control border-0" placeholder="0" formControlName="rideTotalKms">
                             </div>
                         </div>
 
                         <!-- description -->
-                        <div class="col-md-6">
-                            <label>Short Description</label>
-                            <div class="custom-input">
-                                <i class="bi bi-card-heading"></i>
-                                <input type="text" placeholder="Enter Short Description">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold small">Description</label>
+                            <div class="input-group shadow-sm border rounded overflow-hidden">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-card-text"></i></span>
+                                <input type="text" class="form-control border-0" placeholder="Ride Description" formControlName="description">
                             </div>
                         </div>
+                    </div>
 
+                    <hr class="my-4">
 
+                    <!-- Time Slots Section -->
+                    <div class="section-container mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0 text-primary">Time Slots</h6>
+                            <button type="button" class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm" (click)="addTimeSlot()">
+                                <i class="bi bi-plus-lg me-1"></i> Add Slot
+                            </button>
+                        </div>
+                        <div formArrayName="rideTime">
+                            <div *ngFor="let slot of rideTimeArray.controls; let i = index" [formGroupName]="i" class="row g-3 mb-3 p-3 bg-light rounded shadow-sm position-relative border">
+                                <button type="button" class="btn-close position-absolute top-0 end-0 m-2" style="font-size: 0.75rem;" (click)="removeTimeSlot(i)"></button>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Slot Title</label>
+                                    <input type="text" class="form-control" placeholder="e.g. Assembly Point" formControlName="timeTitle">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Start Time</label>
+                                    <input type="time" class="form-control" formControlName="startTime">
+                                </div>
+                            </div>
+                            <div *ngIf="rideTimeArray.length === 0" class="text-center py-3 text-muted border border-dashed rounded bg-light opacity-75">
+                                <i class="bi bi-clock d-block mb-1 fs-4"></i> No time slots added
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Attachments Section -->
+                    <div class="section-container mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0 text-success">Ride Images</h6>
+                            <label class="btn btn-sm btn-success rounded-pill px-3 mb-0 shadow-sm" style="cursor: pointer;">
+                                <i class="bi bi-upload me-1"></i> Upload Images
+                                <input type="file" multiple class="d-none" (change)="onFileChange($event)" accept="image/*">
+                            </label>
+                        </div>
+                        <div class="row g-2">
+                            <div *ngFor="let img of rideAttachmentArray.controls; let i = index" class="col-md-3">
+                                <div class="position-relative border rounded shadow-sm overflow-hidden bg-white" style="height: 80px;">
+                                    <img [src]="'data:image/png;base64,' + img.value" class="w-100 h-100 object-fit-cover">
+                                    <button type="button" class="btn btn-danger btn-sm p-0 position-absolute top-0 end-0 rounded-circle m-1" style="width: 20px; height: 20px;" (click)="removeAttachment(i)">
+                                        <i class="bi bi-x" style="font-size: 14px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="rideAttachmentArray.length === 0" class="col-12 text-center py-4 text-muted border border-dashed rounded bg-light opacity-75">
+                                <i class="bi bi-images d-block mb-1 fs-4"></i> Upload multiple ride photos
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -191,7 +270,7 @@
             <!-- FOOTER -->
             <div class="modal-footer">
                 <button class="cancel-btn" (click)="closeModal()">Cancel</button>
-                <button class="save-btn">Save</button>
+                <button class="save-btn" (click)="saveRide()">{{ isEditMode ? 'Update Ride' : 'Save Ride' }}</button>
             </div>
 
         </div>

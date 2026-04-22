@@ -1,223 +1,227 @@
 <div class="container p-4">
     <div class="header">
         <div class="container">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="heder-title">
-                        <h2>Inquirys</h2>
+                        <h2>Membership Inquiries</h2>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
+                    <div class="search d-flex flex-wrap align-items-center justify-content-end">
                         <div class="search-box">
                             <i class="bi bi-search search-icon"></i>
-                            <input type="text" placeholder="Search..." />
+                            <input type="text" placeholder="Search Inquiries..." />
                         </div>
-                        <div class="add-btn ms-3 pe-auto" (click)="OpenModal()">
-                            <button class="btn">Add Inquiry</button>
+                        <div class="add-btn ms-3" (click)="OpenModal()">
+                            <button class="btn btn-dark rounded-pill px-4">
+                                <i class="bi bi-plus-lg me-2"></i>Add Inquiry
+                            </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="table-container">
-        <table class="custom-table">
+    <div class="table-container shadow-sm border rounded mt-4 text-dark bg-white">
+        <table class="custom-table w-100 mb-0">
             <thead>
                 <tr>
                     <th>Sr No</th>
-                    <th>User Name</th>
-                    <th>Phone</th>
-                    <th>PickUp Location</th>
-                    <th>Drop Location</th>
-                    <th>Ride Date</th>
-                    <th>Time</th>
-                    <th>Action</th>
+                    <th>User Details</th>
+                    <th>Bike Info</th>
+                    <th>City/Occupation</th>
+                    <th>Experience</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr>
-                    <td> 1 </td>
+                <tr *ngFor="let eq of enquiryList; let i = index">
+                    <td> {{ (pageNumber * pageSize) + (i + 1) | number: '2.0' }} </td>
                     <td>
-                        <img src="../../../assets/logo/event.avif" alt="">
+                        <div class="d-flex flex-column">
+                            <span class="fw-bold">{{ eq.userName }}</span>
+                            <small class="text-muted">{{ eq.email }}</small>
+                            <small class="text-secondary">{{ eq.phoneNumber }}</small>
+                        </div>
                     </td>
-                    <td>John Mehta</td>
-                    <td>+91 9876543210</td>
-                    <td>surat</td>
-                    <td>Surat</td>
-                    <td>12 Jun 2026</td>
-                    <td>6:00 Pm</td>
-                    <td class="action-btns">
-                        <i class="bi bi-pencil"></i>
-                        <i class="bi bi-trash-fill delete"></i>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <span>{{ eq.bikeName }}</span>
+                            <small class="text-muted">{{ eq.bikeModel }} ({{ eq.bikeNumber }})</small>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <span>{{ eq.userCity }}</span>
+                            <small class="text-muted">{{ eq.occupation }}</small>
+                        </div>
+                    </td>
+                    <td>{{ eq.experience }} Years</td>
+                    <td>
+                        <span class="badge bg-light text-dark border">Pending</span>
+                    </td>
+                    <td class="action-btns text-center">
+                        <button class="btn btn-sm btn-outline-primary border-0" (click)="openEditModal(eq)">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger border-0" (click)="deleteEnquiry(eq.enquiryID)">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
                     </td>
                 </tr>
-                  <tr>
-                    <td> 2 </td>
-                    <td>
-                        <img src="../../../assets/logo/event.avif" alt="">
-                    </td>
-                    <td>John Mehta</td>
-                    <td>+91 9876543210</td>
-                    <td>surat</td>
-                    <td>Surat</td>
-                    <td>12 Jun 2026</td>
-                    <td>6:00 Pm</td>
-                    <td class="action-btns">
-                        <i class="bi bi-pencil"></i>
-                        <i class="bi bi-trash-fill delete"></i>
-                    </td>
-                </tr>
-                  <tr>
-                    <td> 3 </td>
-                    <td>
-                        <img src="../../../assets/logo/event.avif" alt="">
-                    </td>
-                    <td>John Mehta</td>
-                    <td>+91 9876543210</td>
-                    <td>surat</td>
-                    <td>Surat</td>
-                    <td>12 Jun 2026</td>
-                    <td>6:00 Pm</td>
-                    <td class="action-btns">
-                        <i class="bi bi-pencil"></i>
-                        <i class="bi bi-trash-fill delete"></i>
-                    </td>
+                <tr *ngIf="enquiryList.length === 0">
+                    <td colspan="7" class="text-center py-5 text-muted">No inquiries found</td>
                 </tr>
             </tbody>
         </table>
     </div>
-</div>
 
-<div class="modal fade" id="viewEnquiryModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal view-modal-content">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold">John Mehta</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <hr class="mx-4 my-2">
-            <div class="modal-body p-4 pt-2">
-                <div class="d-flex flex-column gap-3">
-                    <div class="view-item d-flex align-items-center gap-3">
-                        <div class="icon-circle"><i class="bi bi-telephone-fill"></i></div>
-                        <span class="view-label fw-bold">Phone Number :</span>
-                        <span class="view-value">+91 9876543210</span>
-                    </div>
-                    <div class="view-item d-flex align-items-center gap-3">
-                        <div class="icon-circle"><i class="bi bi-geo-alt-fill"></i></div>
-                        <span class="view-label fw-bold">Pickup Location :</span>
-                        <span class="view-value">Surat</span>
-                    </div>
-                    <div class="view-item d-flex align-items-center gap-3">
-                        <div class="icon-circle"><i class="bi bi-geo-alt-fill"></i></div>
-                        <span class="view-label fw-bold">Drop Location :</span>
-                        <span class="view-value">Surat</span>
-                    </div>
-                    <div class="view-item d-flex align-items-center gap-3">
-                        <div class="icon-circle"><i class="bi bi-calendar-event-fill"></i></div>
-                        <span class="view-label fw-bold">Ride Date :</span>
-                        <span class="view-value">12 Jan 2026</span>
-                    </div>
-                    <div class="view-item d-flex align-items-center gap-3">
-                        <div class="icon-circle"><i class="bi bi-clock-fill"></i></div>
-                        <span class="view-label fw-bold">Time :</span>
-                        <span class="view-value">6:00 Pm</span>
-                    </div>
-                </div>
-                <div class="text-center mt-4 pt-2">
-                    <button type="button" class="btn btn-dark px-5 py-2 fw-bold rounded-pill w-100"
-                        style="background-color: #0f172a;" data-bs-dismiss="modal">Save</button>
-                </div>
-            </div>
-        </div>
+    <!-- Pagination start -->
+    <div class="pagination-container d-flex justify-content-between align-items-center mt-4">
+        <span class="showing-text text-muted">Showing {{ Math.min((pageNumber * pageSize) + 1, totalRecords) }} to {{ Math.min((pageNumber + 1) * pageSize, totalRecords) }} of {{ totalRecords }} entries</span>
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0 gap-1">
+                <li class="page-item" [class.disabled]="pageNumber === 0">
+                    <a class="page-link rounded-circle border-0" (click)="previousPage()"><i class="bi bi-chevron-left"></i></a>
+                </li>
+                
+                <li class="page-item" *ngIf="showFirstEllipsis">
+                    <a class="page-link rounded-circle border-0" (click)="changePage(0)">1</a>
+                </li>
+                <li class="page-item disabled" *ngIf="showFirstEllipsis"><span class="page-link border-0">...</span></li>
+
+                <li class="page-item" *ngFor="let page of getPages()">
+                    <a class="page-link rounded-circle border-0" 
+                       [class.active]="page === pageNumber"
+                       (click)="changePage(page)">{{ page + 1 }}</a>
+                </li>
+
+                <li class="page-item disabled" *ngIf="showLastEllipsis"><span class="page-link border-0">...</span></li>
+                <li class="page-item" *ngIf="showLastEllipsis">
+                    <a class="page-link rounded-circle border-0" (click)="changePage(totalPages - 1)">{{ totalPages }}</a>
+                </li>
+
+                <li class="page-item" [class.disabled]="(pageNumber + 1) * pageSize >= totalRecords">
+                    <a class="page-link rounded-circle border-0" (click)="nextPage()"><i class="bi bi-chevron-right"></i></a>
+                </li>
+            </ul>
+        </nav>
     </div>
+    <!-- Pagination end -->
 </div>
 
+<!-- Add/Update Modal -->
+<div class="modal shadow" [class.show]="isModalOpen" [style.display]="isModalOpen ? 'block' : 'none'" 
+     style="background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <!-- HEADER -->
+            <div class="modal-header border-0 p-4 pb-0">
+                <h4 class="fw-bold m-0">{{ isEditMode ? 'Update Inquiry' : 'Add New Inquiry' }}</h4>
+                <button class="btn-close shadow-none" (click)="closeModal()"></button>
+            </div>
 
-
-
-
-
-  <!-- add Team model start -->
-    <div class="modal" [class.show]="isModalOpen" [style.display]="isModalOpen ? 'block' : 'none'">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- HEADER -->
-                <div class="modal-header">
-                    <h5>Add Inquiry</h5>
-                    <button class="btn-close" (click)="closeModal()">✕</button>
-                </div>
-
-                <!-- BODY -->
-                <div class="modal-body">
-                      <form>
+            <!-- BODY -->
+            <div class="modal-body p-4 text-dark">
+                <form [formGroup]="enquiryForm">
                     <div class="row g-4">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">User Name</label>
-                            <div class="custom-input">
-                                    <i class="bi bi-person"></i>
-                                <input type="text" class="form-control border-start-0 ps-0 shadow-none" placeholder="Enter User Name">
-                            </div>
+                        <!-- Basic Info -->
+                        <div class="col-md-6 text-dark">
+                            <label class="form-label fw-bold small text-uppercase">Full Name</label>
+                            <input type="text" class="form-control rounded-3" 
+                                   [class.is-invalid]="submitted && enquiryForm.get('userName')?.invalid"
+                                   formControlName="userName" placeholder="Enter Full Name">
+                            <div class="text-danger small mt-1" *ngIf="submitted && enquiryForm.get('userName')?.invalid">Name is required</div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Phone Number</label>
-                            <div class="custom-input">
-                                     <i class="bi bi-telephone"></i>
-                                <input type="text" class="form-control border-start-0 ps-0 shadow-none" placeholder="Enter Phone Number">
-                            </div>
+                            <label class="form-label fw-bold small text-uppercase">Email Address</label>
+                            <input type="email" class="form-control rounded-3" 
+                                   [class.is-invalid]="submitted && enquiryForm.get('email')?.invalid"
+                                   formControlName="email" placeholder="email@example.com">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Pickup Location</label>
-                            <div class="custom-input">
-                                     <i class="bi bi-geo-alt"></i>
-                                <input type="text" class="form-control border-start-0 ps-0 shadow-none"
-                                    placeholder="Enter Pickup Location">
-                            </div>
+                            <label class="form-label fw-bold small text-uppercase">Phone Number</label>
+                            <input type="text" class="form-control rounded-3" 
+                                   [class.is-invalid]="submitted && enquiryForm.get('phoneNumber')?.invalid"
+                                   formControlName="phoneNumber" placeholder="10-digit number">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Drop Location</label>
-                            <div class="custom-input">
-                                     <i class="bi bi-geo-alt"></i>
-                                <input type="text" class="form-control border-start-0 ps-0 shadow-none" placeholder="Enter Drop Location">
+                            <label class="form-label fw-bold small text-uppercase">City</label>
+                            <input type="text" class="form-control rounded-3" 
+                                   [class.is-invalid]="submitted && enquiryForm.get('userCity')?.invalid"
+                                   formControlName="userCity" placeholder="City">
+                        </div>
+
+                        <!-- Bike Info -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-uppercase">Bike Name</label>
+                            <input type="text" class="form-control rounded-3" formControlName="bikeName" placeholder="e.g. Royal Enfield">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-uppercase">Model</label>
+                            <input type="text" class="form-control rounded-3" formControlName="bikeModel" placeholder="e.g. Classic 350">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-uppercase">Plate Number</label>
+                            <input type="text" class="form-control rounded-3" formControlName="bikeNumber" placeholder="XX 00 XX 0000">
+                        </div>
+
+                        <!-- Professional & Bio -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-uppercase">Experience (Years)</label>
+                            <input type="number" class="form-control rounded-3" formControlName="experience">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-uppercase">Occupation</label>
+                            <input type="text" class="form-control rounded-3" formControlName="occupation">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-uppercase">Date of Birth</label>
+                            <input type="date" class="form-control rounded-3" formControlName="dob">
+                        </div>
+
+                        <!-- Checkboxes / Gear -->
+                        <div class="col-12 mt-2">
+                            <div class="bg-light p-3 rounded-3 d-flex flex-wrap gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="helmet" id="helmet">
+                                    <label class="form-check-label" for="helmet">Helmet</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="jacket" id="jacket">
+                                    <label class="form-check-label" for="jacket">Jacket</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="gloves" id="gloves">
+                                    <label class="form-check-label" for="gloves">Gloves</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="partOfGroup" id="partOfGroup">
+                                    <label class="form-check-label" for="partOfGroup">Other Group?</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Ride Date</label>
-                            <div class="custom-input">
-                                     <i class="bi bi-calendar3"></i>
-                                <input type="text" class="form-control border-start-0 ps-0 shadow-none" placeholder="Select Date"
-                                    onfocus="(this.type='date')">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Time</label>
-                            <div class="custom-input">
-                                     <i class="bi bi-clock"></i>
-                                <input type="text" class="form-control border-start-0 ps-0 shadow-none" placeholder="Select Time"
-                                    onfocus="(this.type='time')">
-                            </div>
+
+                        <!-- Description -->
+                        <div class="col-12">
+                            <label class="form-label fw-bold small text-uppercase">Why do you want to join?</label>
+                            <textarea class="form-control rounded-3" formControlName="joinDescription" rows="3" 
+                                      placeholder="Tell us about yourself..."></textarea>
                         </div>
                     </div>
                 </form>
-                </div>
+            </div>
 
-                <!-- FOOTER -->
-                <div class="modal-footer">
-                    <button class="cancel-btn" (click)="closeModal()">Cancel</button>
-                    <button class="save-btn">Save</button>
-                </div>
-
+            <!-- FOOTER -->
+            <div class="modal-footer border-0 p-4 pt-0 mt-3 d-flex gap-2">
+                <button class="btn btn-outline-secondary rounded-pill px-5 flex-grow-1 py-1 text-dark" (click)="closeModal()">Discard</button>
+                <button class="btn btn-dark rounded-pill px-5 flex-grow-1 py-1" style="background-color: #101729;" (click) ="saveEnquiry()">{{ isEditMode ? 'Update Details' : 'Submit Inquiry' }}</button>
             </div>
         </div>
     </div>
-
-    <!-- SINGLE BACKDROP -->
-    <div class="modal-backdrop" *ngIf="isModalOpen"></div>
-    <!-- add Team model end -->
+</div>

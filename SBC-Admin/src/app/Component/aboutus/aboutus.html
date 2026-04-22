@@ -34,51 +34,47 @@
                     <thead>
                         <tr>
                             <th>Sr No</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
+                            <th>Key</th>
+                            <th>Value</th>
+                            <th>Type</th>
+                            <th>Place</th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td> 1 </td>
+                        <tr *ngFor="let d of about;let i = index">
+                            <td> {{i + 1}} </td>
+                            <td>{{d.key}}</td>
                             <td>
-                                <img src="../../../assets/logo/event.avif" alt="">
+                                <ng-container [ngSwitch]="true">
+                                    <!-- Display Image if type is Image (2 or 1 depending on API) OR if value starts with http or data:image -->
+                                    <div *ngSwitchCase="d.aboutusType == 2 || d.aboutusType == 1 || d.value.startsWith('http') || d.value.startsWith('data:image')">
+                                        <img [src]="d.value.startsWith('http') ? d.value : 'data:image/png;base64,' + d.value" 
+                                             style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" alt="About Image">
+                                    </div>
+                                    <!-- Display Badge for Video -->
+                                    <span *ngSwitchCase="d.aboutusType == 3 || d.aboutusType == 2">
+                                        <span class="badge bg-secondary">Video/Media Content</span>
+                                    </span>
+                                    <!-- Fallback to Text -->
+                                    <span *ngSwitchDefault [innerHTML]="d.value"></span>
+                                </ng-container>
                             </td>
-                            <td>Sunday Ride</td>
-                            <td>Start Your Day With An Energetic 25 KM Morning Ride Through...</td>
-                            <td class="action-btns">
-                                <i class="bi bi-eye" (click)="redirect()"></i>
-                                <i class="bi bi-pencil"></i>
-                                <i class="bi bi-trash-fill delete"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> 2 </td>
                             <td>
-                                <img src="../../../assets/logo/event.avif" alt="">
+                                <span *ngIf="d.aboutusType == 0">Text</span>
+                                <span *ngIf="d.aboutusType == 1">Image</span>
+                                <span *ngIf="d.aboutusType == 2">Video</span>
                             </td>
-                            <td>Sunday Ride</td>
-                            <td>Start Your Day With An Energetic 25 KM Morning Ride Through...</td>
-                            <td class="action-btns">
-                                <i class="bi bi-eye" (click)="redirect()"></i>
-                                <i class="bi bi-pencil"></i>
-                                <i class="bi bi-trash-fill delete"></i>
-                            </td>
-                        </tr>
-                       <tr>
-                            <td> 3 </td>
                             <td>
-                                <img src="../../../assets/logo/event.avif" alt="">
+                                <span *ngIf="d.dataPlace == 0">HomePage</span>
+                                <span *ngIf="d.dataPlace == 1">AboutusPage</span>
+                                <span *ngIf="d.dataPlace == 2">Other</span>
                             </td>
-                            <td>Sunday Ride</td>
-                            <td>Start Your Day With An Energetic 25 KM Morning Ride Through...</td>
                             <td class="action-btns">
-                                <i class="bi bi-eye" (click)="redirect()"></i>
-                                <i class="bi bi-pencil"></i>
-                                <i class="bi bi-trash-fill delete"></i>
+                                <i class="bi bi-eye"></i>
+                                <i class="bi bi-pencil" (click)="Editabout(d)"></i>
+                                <i class="bi bi-trash-fill delete" (click)="deleteabout(d.aboutID)"></i>
                             </td>
                         </tr>
                     </tbody>

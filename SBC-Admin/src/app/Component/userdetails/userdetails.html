@@ -21,32 +21,37 @@
 </div>
 
 <!-- details sectoin start -->
-<section class="user">
+<section class="user" *ngIf="userData">
     <div class="container">
         <div class="row">
             <div class="user-details">
                 <div class="details">
                     <div class="user-img">
-                        <img src="../../../assets/logo/team1.png" alt="">
+                        <img [src]="userData.profilePhoto" 
+                             *ngIf="userData.profilePhoto" alt="User profile">
+                        <img src="../../../assets/logo/team1.png" *ngIf="!userData.profilePhoto" alt="Default profile">
                     </div>
                     <div class="user-name d-flex flex-wrap align-items-center">
                         <span>Name :</span> <br>
-                        <h5 class="mb-0"> Rahul Mehta</h5>
+                        <h5 class="mb-0"> {{ userData.userName }}</h5>
                     </div>
                     <div class="user-email d-flex flex-wrap align-items-center">
                         <Span>Email : </Span>
-                        <h5 class="mb-0">rahul@gmail.com</h5>
+                        <h5 class="mb-0">{{ userData.email }}</h5>
                     </div>
                     <div class="user-phone d-flex flex-wrap align-items-center">
                         <span>Phone : </span>
-                        <h5 class="mb-0">+91 98765 43210</h5>
+                        <h5 class="mb-0">{{ userData.phoneNumber }}</h5>
                     </div>
                     <div class="user-date d-flex flex-wrap align-items-center">
                         <span>Joined Date : </span>
-                        <h5 class="mb-0">12 Jan 2024</h5>
+                        <h5 class="mb-0">{{ userData.joinedDate | date:'dd MMM yyyy' }}</h5>
                     </div>
-                    <div class="user-status">
-                        <h5>Active</h5>
+                    <div class="user-status" [ngClass]="userData.isActive ? 'status-active' : 'status-inactive'">
+                        <h5 class="mb-0 text-white p-2 rounded px-3" 
+                            [style.background-color]="userData.isActive ? '#28a745' : '#dc3545'">
+                            {{ userData.isActive ? 'Active' : 'Inactive' }}
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -66,7 +71,7 @@
                     </div>
                     <div class="ms-3">
                         <h6>Total KM</h6>
-                        <p>110 KM</p>
+                        <p>{{ stats.totalKm }} KM</p>
                     </div>
                 </div>
             </div>
@@ -78,7 +83,7 @@
                     </div>
                     <div class="ms-3">
                         <h6>Total Rides</h6>
-                        <p>12</p>
+                        <p>{{ stats.totalRides }}</p>
                     </div>
                 </div>
             </div>
@@ -90,7 +95,7 @@
                     </div>
                     <div class="ms-3">
                         <h6>Membership Expiry</h6>
-                        <p>20 Dec 2026</p>
+                        <p>{{ stats.membershipExpiry | date:'dd MMM yyyy' }}</p>
                     </div>
                 </div>
             </div>
@@ -102,7 +107,7 @@
                     </div>
                     <div class="ms-3">
                         <h6>Total Event Attend</h6>
-                        <p>10</p>
+                        <p>{{ stats.totalEvents }}</p>
                     </div>
                 </div>
             </div>
@@ -112,17 +117,17 @@
 <!-- card section end -->
 
 <!-- membership section start -->
-<div class="container mt-3">
+<div class="container mt-3" *ngIf="userData">
     <div class="membership-bar d-flex justify-content-between align-items-center flex-wrap">
 
         <div class="membership-item">
             <strong>Membership Start Date :</strong>
-            <span>01 Jan 2026</span>
+            <span>{{ userData.joinDate | date:'dd MMM yyyy' }}</span>
         </div>
 
         <div class="membership-item">
             <strong>Membership Expiry Date :</strong>
-            <span>20 Dec 2026</span>
+            <span>{{ stats.membershipExpiry | date:'dd MMM yyyy' }}</span>
         </div>
 
     </div>
@@ -134,7 +139,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="table-container">
+                <div class="table-container shadow-sm border rounded">
                     <table class="custom-table">
                         <thead>
                             <tr>
@@ -142,54 +147,22 @@
                                 <th>Ride Name</th>
                                 <th>Date</th>
                                 <th>Distance</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td> 1 </td>
-                                <td>City Ride</td>
-                                <td>12 Jan 2026</td>
-                                <td>120 KM</td>
-                                <td>
-                                    <span class="status-btn status-completed">
-                                        Completed
-                                    </span>
-                                </td>
+                            <tr *ngFor="let ride of rideList; let i = index">
+                                <td> {{ i + 1 }} </td>
+                                <td class="fw-bold">{{ ride.rideTitle }}</td>
+                                <td>{{ ride.rideDate | date:'dd MMM yyyy' }}</td>
+                                <td>{{ ride.rideTotalKms }} KM</td>
                                 <td class="action-btns">
-                                    <i class="bi bi-eye-fill view"></i>
+                                    <i class="bi bi-eye-fill view text-primary"></i>
                                 </td>
                             </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td>City Ride</td>
-                                <td>12 Jan 2026</td>
-                                <td>120 KM</td>
-                                <td>
-                                    <span class="status-btn status-completed">
-                                        Completed
-                                    </span>
-                                </td>
-                                <td class="action-btns">
-                                    <i class="bi bi-eye-fill view"></i>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td> 3 </td>
-                                <td>City Ride</td>
-                                <td>12 Jan 2026</td>
-                                <td>120 KM</td>
-                                <td>
-                                    <span class="status-btn status-completed">
-                                        Completed
-                                    </span>
-                                </td>
-                                <td class="action-btns">
-                                    <i class="bi bi-eye-fill view"></i>
-                                </td>
+                            <tr *ngIf="rideList.length === 0">
+                                <td colspan="5" class="text-center py-4 text-muted">No rides joined yet</td>
                             </tr>
                         </tbody>
                     </table>

@@ -1,60 +1,102 @@
-.wrapper {
-    display: flex;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f9fc;
 }
 
 .main-content {
-    margin-left: 70px;
-    width: calc(100% - 70px);
-    padding: 20px;
-    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-    overflow-x: hidden;
+  flex: 1;
+  margin-left: 217px; /* Width of the sidebar */
+  padding: 30px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
-.main-content.expanded {
-    margin-left: 210px;
-    width: calc(100% - 185px);
+/* Global Back Button Styles for Details Pages */
+.title-with-back {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.main-content.collapsed {
-    margin-left: 55px;
-    width: calc(100% - 55px);
+.back-link {
+  color: #2b2f3e;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.content-wrapper {
-    overflow: auto;
+.back-link:hover {
+  background-color: #f1f3f5;
 }
 
-.loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.142);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+/* Global API Loader */
+.global-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.85); /* Premium glassmorphism feel */
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@media (max-width: 576px) {
-    .main-content {
-        margin-left: 0px;
-        width: 100%;
-    }
+.premium-loader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid #e2e8f0;
+  border-top-color: #f66d34; /* Your primary orange brand color */
+  border-bottom-color: #f66d34; /* Dual spinning for aesthetics */
+  animation: premium-spin 1s ease-in-out infinite, pulse-glow 2s infinite ease-in-out;
+}
 
-    .main-content.expanded {
-        margin-left: 50px;
-        width: calc(100% - 50px);
-    }
+@keyframes premium-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
-    .main-content.collapsed {
-        margin-left: 50px;
-        width: calc(100% - 50px);
-    }
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(246, 109, 52, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(246, 109, 52, 0.6);
+  }
+}
 
-    .main-content {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
+/* Global Validation Styles */
+.error-message {
+  color: #dc3545 !important;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 5px;
+  display: block;
+}
+
+.input-wrapper.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.input-wrapper.is-invalid .input-icon {
+  color: #dc3545 !important;
 }

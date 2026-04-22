@@ -12,8 +12,22 @@ import { Eventdetails } from './Component/eventdetails/eventdetails';
 import { Gallery } from './Component/gallery/gallery';
 import { Aboutus } from './Component/aboutus/aboutus';
 import { AddAbout } from './Component/add-about/add-about';
+import { Login } from './Component/login/login';
+import { AddUser } from './Component/usermanagement/add-user/add-user';
+import { UserRide } from './Component/ride-management/user-ride/user-ride';
+import { AuthGuard } from './Common/auth.guard';
+import { Ridesefty } from './Component/ridesefty/ridesefty';
 
 export const routes: Routes = [
+    {
+        path: "",
+        redirectTo: "Login",
+        pathMatch: "full"
+    },
+    {
+        path: "Login",
+        component: Login
+    },
     {
         path: "Sidebar",
         component: Sidebar
@@ -27,18 +41,6 @@ export const routes: Routes = [
         component: Enquiries
     },
     {
-        path: "User Management",
-        component: Usermanagement
-    },
-    {
-        path: "Team",
-        component: Team
-    },
-    {
-        path: "Slider",
-        component: Slider
-    },
-    {
         path: "UserManagement",
         children: [
             {
@@ -46,14 +48,39 @@ export const routes: Routes = [
                 component: Usermanagement
             },
             {
-                path: "Userdetails",
+                path: "Adduser",
+                component: AddUser
+            },
+            {
+                path: "Userdetails/:id",
                 component: Userdetails
             }
         ]
+
+    },
+    {
+        path: "Team",
+        component: Team
+    },
+    {
+        path: "Slider",
+        component: Slider,
+        canActivate:[AuthGuard]
     },
     {
         path: "RideManagement",
-        component: RideManagement
+        children:[
+            {
+                path:"",
+                component: RideManagement,
+                canActivate:[AuthGuard]
+            },
+            {
+                path:"UserRide/:id",
+                component:UserRide
+            }
+        ]
+       
     },
     {
         path: "eventmanagement",
@@ -70,7 +97,8 @@ export const routes: Routes = [
     },
     {
         path: "gallery",
-        component: Gallery
+        component: Gallery,
+        canActivate:[AuthGuard]
     },
     {
         path: "AboutUs",
@@ -80,9 +108,14 @@ export const routes: Routes = [
                 component: Aboutus
             },
             {
-                path:"AddAbout",
-                component:AddAbout
+                path: "AddAbout",
+                component: AddAbout
             }
         ]
+    },
+    {
+        path:"RideSefty",
+        component:Ridesefty,
+        canActivate:[AuthGuard]
     }
 ];

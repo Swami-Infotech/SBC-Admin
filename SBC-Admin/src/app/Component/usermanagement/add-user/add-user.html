@@ -1,0 +1,279 @@
+<div class="add-user-card">
+  <div class="add-user-header">
+    <h2 class="title">{{ isEditMode ? 'Update User' : 'Add User' }}</h2>
+    <button class="close-btn" (click)="close()"><i class="bi bi-x-lg"></i></button>
+  </div>
+
+  <div class="add-user-body">
+    <form class="user-form" [formGroup]="AdduserForm" (ngSubmit)="saveUser()">
+      <div class="row">
+        <!-- Profile Image -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Profile Image</label>
+          <div class="profile-upload-container">
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-bounding-box"></i></span>
+              <input type="file" class="form-control" (change)="fileChangeEvents($event)">
+            </div>
+            <div class="image-preview mt-2" *ngIf="imagePreviewUrl">
+              <img [src]="imagePreviewUrl" alt="Profile Preview" class="img-thumbnail"
+                style="max-height: 100px;">
+            </div>
+          </div>
+        </div>
+        <!-- User Name -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">User Name</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <input type="text" class="form-control" [class.is-invalid]="AdduserForm.get('userName')?.touched && AdduserForm.get('userName')?.invalid" placeholder="Enter User Name" formControlName="userName">
+          </div>
+          <div class="text-danger small mt-1" *ngIf="AdduserForm.get('userName')?.touched && AdduserForm.get('userName')?.invalid">
+            User Name is required
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Email</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+            <input type="email" class="form-control" [class.is-invalid]="AdduserForm.get('email')?.touched && AdduserForm.get('email')?.invalid" placeholder="Enter Email" formControlName="email">
+          </div>
+          <div class="text-danger small mt-1" *ngIf="AdduserForm.get('email')?.touched && AdduserForm.get('email')?.invalid">
+            <span *ngIf="AdduserForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="AdduserForm.get('email')?.errors?.['email']">Invalid email format</span>
+          </div>
+        </div>
+        <!-- Phone Number -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Phone Number</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+            <input type="tel" class="form-control" [class.is-invalid]="AdduserForm.get('phoneNumber')?.touched && AdduserForm.get('phoneNumber')?.invalid" placeholder="Enter Phone Number" formControlName="phoneNumber">
+          </div>
+          <div class="text-danger small mt-1" *ngIf="AdduserForm.get('phoneNumber')?.touched && AdduserForm.get('phoneNumber')?.invalid">
+            Phone Number is required
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+            <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" [class.is-invalid]="AdduserForm.get('password')?.touched && AdduserForm.get('password')?.invalid" placeholder="Enter Password"
+              formControlName="password">
+            <span class="input-group-text password-toggle" (click)="togglePasswordVisibility()">
+              <i class="bi" [ngClass]="isPasswordVisible ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </span>
+          </div>
+          <div class="text-danger small mt-1" *ngIf="AdduserForm.get('password')?.touched && AdduserForm.get('password')?.invalid">
+            Password is required
+          </div>
+        </div>
+        <!-- Role -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Role</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-people"></i></span>
+            <select class="form-select" formControlName="userType">
+              <option [ngValue]="null" disabled selected>Select Role</option>
+              <option *ngFor="let type of userTypeKeys" [ngValue]="getUserTypeValue(type)">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Role Badge -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Role Badge</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-patch-check"></i></span>
+            <input type="text" class="form-control" placeholder="Enter Role Badge" formControlName="roleBadge">
+          </div>
+        </div>
+
+        <!-- Is Active -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Account Status</label>
+          <div class="form-check form-switch mt-2 ms-2">
+            <input class="form-check-input" type="checkbox" id="isActive" formControlName="isActive">
+            <label class="form-check-label ms-2" for="isActive">Active Account</label>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Address</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+            <input type="text" class="form-control" placeholder="Enter Address" formControlName="address">
+          </div>
+        </div>
+        <!-- Join Date -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Join Date</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+            <input type="date" class="form-control" [class.is-invalid]="AdduserForm.get('joinDate')?.touched && AdduserForm.get('joinDate')?.invalid" formControlName="joinDate">
+          </div>
+          <div class="text-danger small mt-1" *ngIf="AdduserForm.get('joinDate')?.touched && AdduserForm.get('joinDate')?.invalid">
+            Join Date is required
+          </div>
+        </div>
+
+        <!-- License Number -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">License Number</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-card-list"></i></span>
+            <input type="text" class="form-control" placeholder="Enter License Number" formControlName="licenseNumber">
+          </div>
+        </div>
+        <!-- Occupation -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Occupation</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+            <input type="text" class="form-control" placeholder="Enter Occupation" formControlName="occupation">
+          </div>
+        </div>
+
+        <!-- Resident Area In Surat -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">City</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+            <input type="text" class="form-control" placeholder="Enter City" formControlName="userCity">
+          </div>
+        </div>
+        <!-- DOB -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">DOB</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+            <input type="date" class="form-control" formControlName="dob">
+          </div>
+        </div>
+
+        <!-- Bike Number -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Bike Number</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-bicycle"></i></span>
+            <input type="text" class="form-control" placeholder="Enter Bike Number" formControlName="bikeNumber">
+          </div>
+        </div>
+
+        <!-- Bike name -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Bike Name</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-bicycle"></i></span>
+            <input type="text" class="form-control" placeholder="Enter Bike Name" formControlName="bikeName">
+          </div>
+        </div>
+
+        <!-- Emergency Name -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Emergency Contact Name</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
+            <input type="text" class="form-control" placeholder="Enter Emergency Name" formControlName="emergencyName">
+          </div>
+        </div>
+
+
+        <!-- Emergency Number -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Emergency Contact Number</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+            <input type="tel" class="form-control" placeholder="Enter Emergency Number"
+              formControlName="emergencyNumber">
+          </div>
+        </div>
+
+        <!-- Motorcycle Brand And Model -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Bike Model</label>
+          <div class="input-group align-items-start">
+            <span class="input-group-text mt-2"><i class="bi bi-info-circle"></i></span>
+            <input class="form-control" placeholder="Enter Brand And Model" formControlName="bikeModel">
+          </div>
+        </div>
+
+        <!-- Riding Experience -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Riding Experience (Years)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-speedometer2"></i></span>
+            <input type="number" class="form-control" placeholder="Enter Riding Experience"
+              formControlName="experience">
+          </div>
+        </div>
+
+        <!-- Helmet -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Helmet Available?</label>
+          <div class="radio-group-modern">
+            <input type="radio" name="helmet" id="helmet-yes" [value]="true" formControlName="helmet">
+            <label for="helmet-yes" class="radio-btn flex-1"><i class="bi bi-circle"></i> Yes</label>
+            <input type="radio" name="helmet" id="helmet-no" [value]="false" formControlName="helmet">
+            <label for="helmet-no" class="radio-btn flex-1"><i class="bi bi-circle"></i> No</label>
+          </div>
+        </div>
+        <!-- Jacket -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Jacket Available?</label>
+          <div class="radio-group-modern">
+            <input type="radio" name="jacket" id="jacket-yes" [value]="true" formControlName="jacket">
+            <label for="jacket-yes" class="radio-btn flex-1"><i class="bi bi-circle"></i> Yes</label>
+            <input type="radio" name="jacket" id="jacket-no" [value]="false" formControlName="jacket">
+            <label for="jacket-no" class="radio-btn flex-1"><i class="bi bi-circle"></i> No</label>
+          </div>
+        </div>
+
+        <!-- Gloves -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Gloves Available?</label>
+          <div class="radio-group-modern">
+            <input type="radio" name="gloves" id="gloves-yes" [value]="true" formControlName="gloves">
+            <label for="gloves-yes" class="radio-btn flex-1"><i class="bi bi-circle"></i> Yes</label>
+            <input type="radio" name="gloves" id="gloves-no" [value]="false" formControlName="gloves">
+            <label for="gloves-no" class="radio-btn flex-1"><i class="bi bi-circle"></i> No</label>
+          </div>
+        </div>
+        <!-- Other Group -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Part Of Other Group?</label>
+          <div class="radio-group-modern">
+            <input type="radio" name="partOfGroup" id="group-yes" [value]="true" formControlName="partOfGroup">
+            <label for="group-yes" class="radio-btn flex-1"><i class="bi bi-circle"></i> Yes</label>
+            <input type="radio" name="partOfGroup" id="group-no" [value]="false" formControlName="partOfGroup">
+            <label for="group-no" class="radio-btn flex-1"><i class="bi bi-circle"></i> No</label>
+          </div>
+        </div>
+
+
+        <!-- Motivations -->
+        <div class="col-md-12 mb-3">
+          <label class="form-label">What Motivates You To Join Team SBC?</label>
+          <div class="input-group align-items-start">
+            <span class="input-group-text mt-2"><i class="bi bi-chat-left-text"></i></span>
+            <textarea class="form-control" rows="3" placeholder="Describe your motivation"
+              formControlName="joinDescription"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer mt-4">
+        <button type="submit" class="btn btn-save px-5" [disabled]="AdduserForm.invalid">
+          {{ isEditMode ? 'Update User' : 'Save User' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

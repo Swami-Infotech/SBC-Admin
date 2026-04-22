@@ -1,12 +1,12 @@
-<div *ngIf="isLoggedIn" class="wrapper">
-  <app-sidebar (sidebarToggled)="onSidebarToggle()"></app-sidebar>
-  <div class="main-content" [ngClass]="{ 'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded }">
-    <div class="content-wrapper">
-      <!-- <app-loader></app-loader> -->
+<app-loader></app-loader>
 
+@if (isLoginPage()) {
+  <router-outlet></router-outlet>
+} @else {
+  <div class="app-layout">
+    <app-sidebar></app-sidebar>
+    <main class="main-content">
       <router-outlet></router-outlet>
-    </div>
+    </main>
   </div>
-</div>
-
-<router-outlet *ngIf="!isLoggedIn"></router-outlet>
+}

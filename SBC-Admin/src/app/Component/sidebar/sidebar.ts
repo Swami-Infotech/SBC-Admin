@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   imports: [RouterLink, FormsModule, CommonModule, RouterModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Sidebar implements OnInit {
  isExpanded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -64,7 +65,7 @@ export class Sidebar implements OnInit {
     localStorage.removeItem('token');
     sessionStorage.clear();
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/Login']);
 
     console.log('User logged out successfully');
   }
