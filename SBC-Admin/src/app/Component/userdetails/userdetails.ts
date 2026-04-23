@@ -22,6 +22,7 @@ export class Userdetails implements OnInit {
     totalEvents: 0,
     membershipExpiry: ''
   };
+  searchTerm: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -56,5 +57,17 @@ export class Userdetails implements OnInit {
         this.toast.showError("Something went wrong while fetching user details");
       }
     });
+  }
+
+  get filteredRideList(): any[] {
+    if (!this.searchTerm) {
+      return this.rideList;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.rideList.filter(ride => 
+      (ride.rideTitle && ride.rideTitle.toLowerCase().includes(term)) ||
+      (ride.startLocation && ride.startLocation.toLowerCase().includes(term)) ||
+      (ride.endLocation && ride.endLocation.toLowerCase().includes(term))
+    );
   }
 }

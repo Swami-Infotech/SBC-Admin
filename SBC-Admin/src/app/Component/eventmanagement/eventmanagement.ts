@@ -23,6 +23,7 @@ export class Eventmanagement implements OnInit {
   pageSize: number = 10;
   totalRecords: number = 0;
   Math = Math;
+  searchTerm: string = '';
 
   constructor(private route: Router, private service: SBC, private toast: ToastrNotificationService, private fb: FormBuilder) {
     this.EventForm = this.fb.group({
@@ -282,5 +283,16 @@ export class Eventmanagement implements OnInit {
             );
           }
         });
+  }
+
+  get filteredEventList(): any[] {
+    if (!this.searchTerm) {
+      return this.eventList;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.eventList.filter(event => 
+      (event.eventName && event.eventName.toLowerCase().includes(term)) ||
+      (event.eventLocation && event.eventLocation.toLowerCase().includes(term))
+    );
   }
 }

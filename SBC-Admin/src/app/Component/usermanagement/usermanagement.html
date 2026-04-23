@@ -11,7 +11,7 @@
                 <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
                     <div class="search-box">
                         <i class="bi bi-search search-icon"></i>
-                        <input type="text" placeholder="Search..." />
+                        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" />
                     </div>
                     <div class="add-btn ms-3 pe-auto" (click)="Adduser()">
                         <button class="btn">Add User</button>
@@ -44,7 +44,7 @@
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let user of userList; let i = index">
+                        <tr *ngFor="let user of filteredUserList; let i = index">
                             <td> {{ i + 1 }} </td>
                             <td>
                                 <img [src]="user.userImage"
@@ -76,7 +76,7 @@
                                 <i class="bi bi-trash-fill delete"></i>
                             </td>
                         </tr>
-                        <tr *ngIf="userList.length === 0">
+                        <tr *ngIf="filteredUserList.length === 0">
                             <td colspan="8" class="text-center py-4">No users found</td>
                         </tr>
                     </tbody>

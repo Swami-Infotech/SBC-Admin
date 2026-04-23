@@ -21,6 +21,7 @@ export class Team implements OnInit {
   isModalOpen = false;
   imagePreview: any = null;
   currentTeamMemberID: any = null;
+  searchTerm: string = '';
 
 
   ngOnInit(): void {
@@ -172,5 +173,16 @@ export class Team implements OnInit {
         );
       }
     });
+  }
+
+  get filteredTeam(): any[] {
+    if (!this.searchTerm) {
+      return this.team;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.team.filter((member: any) => 
+      (member.memberName && member.memberName.toLowerCase().includes(term)) ||
+      (member.memberRole && member.memberRole.toLowerCase().includes(term))
+    );
   }
 }

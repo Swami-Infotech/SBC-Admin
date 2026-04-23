@@ -19,7 +19,8 @@ export class Gallery implements OnInit {
   GallaryForm!: FormGroup;
   selectedFileName: string | null = null;
   selectedImageFile: File | null = null;
-  gallery: any
+  gallery: any;
+  searchTerm: string = '';
 
   constructor(private route: Router,
     private service: SBC,
@@ -160,5 +161,16 @@ export class Gallery implements OnInit {
         );
       }
     });
+  }
+
+  get filteredGallery(): any[] {
+    if (!this.searchTerm) {
+      return this.gallery;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.gallery.filter((item: any) => 
+      (item.galleryID && item.galleryID.toString().includes(term)) ||
+      (item.isFeatured ? 'featured'.includes(term) : 'not featured'.includes(term))
+    );
   }
 }

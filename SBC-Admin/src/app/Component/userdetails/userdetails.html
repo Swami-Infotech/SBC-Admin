@@ -11,7 +11,7 @@
                 <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
                     <div class="search-box">
                         <i class="bi bi-search search-icon"></i>
-                        <input type="text" placeholder="Search..." />
+                        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" />
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@
                         </thead>
 
                         <tbody>
-                            <tr *ngFor="let ride of rideList; let i = index">
+                            <tr *ngFor="let ride of filteredRideList; let i = index">
                                 <td> {{ i + 1 }} </td>
                                 <td class="fw-bold">{{ ride.rideTitle }}</td>
                                 <td>{{ ride.rideDate | date:'dd MMM yyyy' }}</td>

@@ -20,6 +20,7 @@ export class Slider implements OnInit {
   isModalOpen = false;
   showPassword = false;
   isEditModal = false;
+  searchTerm: string = '';
 
   ngOnInit(): void {
     this.getalldata();
@@ -167,5 +168,16 @@ export class Slider implements OnInit {
             );
           }
         });
+  }
+
+  get filteredSlider(): any[] {
+    if (!this.searchTerm) {
+      return this.slider;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.slider.filter((item: any) => 
+      (item.sliderTitle && item.sliderTitle.toLowerCase().includes(term)) ||
+      (item.redirectTo && item.redirectTo.toLowerCase().includes(term))
+    );
   }
 }

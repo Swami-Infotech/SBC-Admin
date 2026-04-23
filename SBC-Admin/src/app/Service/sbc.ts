@@ -197,4 +197,24 @@ export class SBC {
     return this.http.get(this.baseurl + `Enquiry/DeleteEnquiry?EnquiryID=${EnquiryID}`);
   }
 
+  addnotification(data:any){
+    return this.http.post(this.baseurl + 'Notification/AddNotification',data)
+  }
+
+  getallnotification(){
+    return this.http.get(this.baseurl + 'Notification/GetAllNotification')
+  }
+
+  updatenotification(data:any){
+    return this.http.post(this.baseurl + 'Notification/UpdateNotification',data)
+  }
+
+  deletenotification(NotificationID:number){
+    return this.http.get(this.baseurl + `Notification/DeleteNotification?NotificationID=${NotificationID}`)
+  }
+
+  getalluser(){
+    return this.http.get(this.baseurl + 'Auth/GetAllUser')
+  }
+
 }

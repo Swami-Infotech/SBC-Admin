@@ -30,6 +30,7 @@ export class Usermanagement implements OnInit {
   userTypeKeys = Object.keys(UserType).filter(key => isNaN(Number(key)));
   imagePreviewUrl: string | null = null;
   isPasswordVisible: boolean = false;
+  searchTerm: string = '';
 
   constructor(private route: Router, private service: SBC, private toast: ToastrNotificationService, private fb: FormBuilder) {
     this.AdduserForm = this.fb.group({
@@ -305,5 +306,17 @@ export class Usermanagement implements OnInit {
         this.toast.showError("Something went wrong");
       }
     });
+  }
+
+  get filteredUserList(): any[] {
+    if (!this.searchTerm) {
+      return this.userList;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.userList.filter(user => 
+      (user.userName && user.userName.toLowerCase().includes(term)) ||
+      (user.email && user.email.toLowerCase().includes(term)) ||
+      (user.phoneNumber && user.phoneNumber.includes(term))
+    );
   }
 }

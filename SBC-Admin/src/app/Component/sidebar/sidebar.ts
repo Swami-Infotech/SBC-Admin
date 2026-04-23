@@ -36,26 +36,17 @@ export class Sidebar implements OnInit {
   }
 
   componentIcons: { [key: string]: string } = {
-    Dashboard: 'bi bi-grid',
-    Home: 'bi bi-house-door',
-    Category: 'bi bi-tags',
-    Order: 'bi bi-receipt',
-    Product: 'bi bi-box-seam',
-    Customer: 'bi bi-person',
-    Slider: 'bi bi-sliders',
-    Artist: 'bi bi-person-bounding-box',
-    Coupon: 'bi bi-ticket-perforated',
-    Staff: 'bi bi-people',
-    State: 'bi bi-geo-alt',
-    Tax: 'bi bi-receipt',
-    Preferences: 'bi bi-gear',
-    Testimonial: 'bi bi-wechat',
-    Content: 'bi bi-body-text',
-    AboutUs: 'bi bi-file-earmark-person',
-    Blog: 'bi bi-substack',
-    Faq: 'bi bi-patch-question',
-    ContactUs: 'bi bi-chat',
-    Review: 'bi bi-star-fill',
+    Dashboard: 'bi bi-speedometer2',
+    UserManagement: 'bi bi-people-fill',
+    RideManagement: 'bi bi-bicycle',
+    EventManagement: 'bi bi-calendar-event-fill',
+    Gallery: 'bi bi-images',
+    AboutUs: 'bi bi-info-circle-fill',
+    Slider: 'bi bi-collection-play-fill',
+    Team: 'bi bi-person-badge-fill',
+    Inquiry: 'bi bi-chat-left-dots-fill',
+    RideSafety: 'bi bi-shield-check',
+    Notification: 'bi bi-bell-fill',
   };
 
   getIcon(componentName: string): string {

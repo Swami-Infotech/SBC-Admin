@@ -24,6 +24,7 @@ export class Enquiries implements OnInit {
   pageSize: number = 10;
   totalRecords: number = 0;
   Math = Math;
+  searchTerm: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -214,5 +215,18 @@ export class Enquiries implements OnInit {
         });
       }
     });
+  }
+
+  get filteredEnquiryList(): any[] {
+    if (!this.searchTerm) {
+      return this.enquiryList;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.enquiryList.filter(item => 
+      (item.userName && item.userName.toLowerCase().includes(term)) ||
+      (item.email && item.email.toLowerCase().includes(term)) ||
+      (item.phoneNumber && item.phoneNumber.includes(term)) ||
+      (item.bikeName && item.bikeName.toLowerCase().includes(term))
+    );
   }
 }

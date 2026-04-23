@@ -12,7 +12,7 @@
                     <div class="search d-flex flex-wrap align-items-center justify-content-end">
                         <div class="search-box">
                             <i class="bi bi-search search-icon"></i>
-                            <input type="text" placeholder="Search Inquiries..." />
+                            <input type="text" placeholder="Search Inquiries..." [(ngModel)]="searchTerm" />
                         </div>
                         <div class="add-btn ms-3" (click)="OpenModal()">
                             <button class="btn btn-dark rounded-pill px-4">
@@ -40,7 +40,7 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let eq of enquiryList; let i = index">
+                <tr *ngFor="let eq of filteredEnquiryList; let i = index">
                     <td> {{ (pageNumber * pageSize) + (i + 1) | number: '2.0' }} </td>
                     <td>
                         <div class="d-flex flex-column">

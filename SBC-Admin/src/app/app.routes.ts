@@ -17,6 +17,7 @@ import { AddUser } from './Component/usermanagement/add-user/add-user';
 import { UserRide } from './Component/ride-management/user-ride/user-ride';
 import { AuthGuard } from './Common/auth.guard';
 import { Ridesefty } from './Component/ridesefty/ridesefty';
+import { Notification } from './Component/notification/notification';
 
 export const routes: Routes = [
     {
@@ -112,6 +113,10 @@ export const routes: Routes = [
                 component: AddAbout
             }
         ]
+    },
+    {
+        path:"Notification",
+        component:Notification
     },
     {
         path:"RideSefty",

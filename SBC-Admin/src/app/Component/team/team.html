@@ -12,7 +12,7 @@
                     <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
                         <div class="search-box">
                             <i class="bi bi-search search-icon"></i>
-                            <input type="text" placeholder="Search..." />
+                            <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" />
                         </div>
                         <div class="add-btn ms-3 pe-auto" (click)="OpenModal()">
                             <button class="btn">Add Team</button>
@@ -39,7 +39,7 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let d of team;let i = index">
+                    <tr *ngFor="let d of filteredTeam; let i = index">
                         <td> {{i + 1}} </td>
                         <td>
                             <img [src]="d.memberImage" alt="">
@@ -51,6 +51,9 @@
                             <i class="bi bi-pencil" (click)="editteam(d)"></i>
                             <i class="bi bi-trash-fill delete" (click)="deleteteam(d.coreTeamMemberID)"></i>
                         </td>
+                    </tr>
+                    <tr *ngIf="filteredTeam.length === 0">
+                        <td colspan="6" class="text-center py-4">No team members found</td>
                     </tr>
                 </tbody>
             </table>
