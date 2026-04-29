@@ -217,4 +217,8 @@ export class SBC {
     return this.http.get(this.baseurl + 'Auth/GetAllUser')
   }
 
+  addUserMembership(data: any) {
+    return this.http.post(this.baseurl + 'Admin/AddUserMemberShip', data);
+  }
+
 }

@@ -39,6 +39,7 @@
                             <th>Type</th>
                             <th>join Date</th>
                             <th>Active</th>
+                            <th>Member Ship</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -47,8 +48,7 @@
                         <tr *ngFor="let user of filteredUserList; let i = index">
                             <td> {{ i + 1 }} </td>
                             <td>
-                                <img [src]="user.userImage"
-                                    alt="User Image" class="user-profile-img">
+                                <img [src]="user.userImage" alt="User Image" class="user-profile-img">
                             </td>
                             <td>{{ user.userName }}</td>
                             <td>{{ user.phoneNumber }}</td>
@@ -70,6 +70,9 @@
                                     <span class="slider"></span>
                                 </label>
                             </td>
+                            <td class="add-btn" (click)="openmodal(user)">
+                                <button class="btn">Add MemberShip</button>
+                            </td>
                             <td class="action-btns">
                                 <i class="bi bi-eye-fill view" (click)="Redirectuser(user.userID)"></i>
                                 <i class="bi bi-pencil" (click)="editUser(user)"></i>
@@ -86,11 +89,11 @@
             <!-- Pagination Controls -->
             <div class="pagination-container d-flex flex-wrap justify-content-between align-items-center mt-4">
                 <div class="pagination-info text-muted">
-                    Showing <span class="fw-bold">{{ pageSize  }}</span> 
-                    to <span class="fw-bold">{{ totalRecords }}</span> 
+                    Showing <span class="fw-bold">{{ pageSize }}</span>
+                    to <span class="fw-bold">{{ totalRecords }}</span>
                     of <span class="fw-bold">{{ totalRecords }}</span> entries
                 </div>
-                
+
                 <nav aria-label="Page navigation" class="mt-2 mt-md-0">
                     <ul class="pagination pagination-rounded mb-0">
                         <!-- First Page -->
@@ -99,7 +102,7 @@
                                 <i class="bi bi-chevron-double-left"></i>
                             </a>
                         </li>
-                        
+
                         <!-- Previous Page -->
                         <li class="page-item" [class.disabled]="pageNumber === 1">
                             <a class="page-link" (click)="previousPage()" aria-label="Previous">
@@ -153,8 +156,8 @@
             </div>
             <div class="modal-body p-4">
                 <div class="user-info-section mb-4 text-center">
-                    <img [src]="selectedUser?.userImage"
-                        class="rounded-circle mb-2" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #f8f9fa;">
+                    <img [src]="selectedUser?.userImage" class="rounded-circle mb-2"
+                        style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #f8f9fa;">
                     <h6 class="fw-bold mb-0">{{ selectedUser?.userName }}</h6>
                     <small class="text-muted">{{ selectedUser?.email }}</small>
                 </div>
@@ -174,9 +177,10 @@
                     <label class="form-label fw-bold small">New Password</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="bi bi-lock"></i></span>
-                        <input [type]="showPassword ? 'text' : 'password'" class="form-control border-start-0" 
-                               placeholder="Enter new password" [(ngModel)]="newPassword">
-                        <button class="btn btn-outline-secondary border-start-0" type="button" (click)="showPassword = !showPassword">
+                        <input [type]="showPassword ? 'text' : 'password'" class="form-control border-start-0"
+                            placeholder="Enter new password" [(ngModel)]="newPassword">
+                        <button class="btn btn-outline-secondary border-start-0" type="button"
+                            (click)="showPassword = !showPassword">
                             <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                         </button>
                     </div>
@@ -184,7 +188,8 @@
             </div>
             <div class="modal-footer border-0 p-3">
                 <button type="button" class="btn btn-light px-4" (click)="closePasswordModal()">Cancel</button>
-                <button type="button" class="btn btn-primary px-4 bg-dark border-0" (click)="updatePassword()">Update Password</button>
+                <button type="button" class="btn btn-primary px-4 bg-dark border-0" (click)="updatePassword()">Update
+                    Password</button>
             </div>
         </div>
     </div>
@@ -207,7 +212,8 @@
                                 <label class="form-label d-block fw-bold text-start mb-3">Profile Picture</label>
                                 <div class="image-preview-container mb-3">
                                     <img [src]="imagePreviewUrl ? imagePreviewUrl : '../../../assets/logo/team1.png'"
-                                        class="rounded-circle shadow-sm" style="width: 100px; height: 100px; object-fit: cover; border: 4px solid white;">
+                                        class="rounded-circle shadow-sm"
+                                        style="width: 100px; height: 100px; object-fit: cover; border: 4px solid white;">
                                 </div>
                                 <div class="small text-muted mt-2">Image cannot be changed here</div>
                             </div>
@@ -227,7 +233,8 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-bold small">Role</label>
                                     <select class="form-select bg-light" formControlName="userType">
-                                        <option *ngFor="let type of userTypeKeys" [ngValue]="getUserTypeValue(type)">{{ type }}</option>
+                                        <option *ngFor="let type of userTypeKeys" [ngValue]="getUserTypeValue(type)">{{
+                                            type }}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -237,9 +244,11 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-bold small">New Password</label>
                                     <div class="input-group">
-                                        <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control shadow-sm border-primary" 
-                                               formControlName="password" placeholder="Enter new password">
-                                        <button class="btn btn-outline-primary" type="button" (click)="isPasswordVisible = !isPasswordVisible">
+                                        <input [type]="isPasswordVisible ? 'text' : 'password'"
+                                            class="form-control shadow-sm border-primary" formControlName="password"
+                                            placeholder="Enter new password">
+                                        <button class="btn btn-outline-primary" type="button"
+                                            (click)="isPasswordVisible = !isPasswordVisible">
                                             <i class="bi" [ngClass]="isPasswordVisible ? 'bi-eye-slash' : 'bi-eye'"></i>
                                         </button>
                                     </div>
@@ -247,8 +256,10 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-bold small d-block">Active Status</label>
                                     <div class="form-check form-switch mt-2">
-                                        <input class="form-check-input" type="checkbox" formControlName="isActive" id="edit-active-status">
-                                        <label class="form-check-label" for="edit-active-status">{{ AdduserForm.get('isActive')?.value ? 'Active' : 'Inactive' }}</label>
+                                        <input class="form-check-input" type="checkbox" formControlName="isActive"
+                                            id="edit-active-status">
+                                        <label class="form-check-label" for="edit-active-status">{{
+                                            AdduserForm.get('isActive')?.value ? 'Active' : 'Inactive' }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -260,6 +271,55 @@
                         <button type="submit" class="btn btn-dark px-5">Update User</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Member ship  Modal -->
+<div class="modal fade show" *ngIf="showmembership" style="display: block; background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+            <div class="modal-header bg-light border-0 py-3">
+                <h5 class="modal-title fw-bold">Add Membership</h5>
+                <button type="button" class="btn-close" (click)="closeMembershipModal()"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="user-info-section mb-4 text-center">
+                    <img [src]="selectedUser?.userImage" class="rounded-circle mb-2"
+                        style="width: 60px; height: 60px; object-fit: cover; border: 2px solid #f8f9fa;">
+                    <h6 class="fw-bold mb-0">{{ selectedUser?.userName }}</h6>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="date-field">
+                            <label class="form-label fw-bold small">Start Date</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i
+                                        class="bi bi-calendar-check"></i></span>
+                                <input type="datetime-local" class="form-control border-start-0"
+                                    [(ngModel)]="membershipStartDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="date-field">
+                            <label class="form-label fw-bold small">End Date</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i
+                                        class="bi bi-calendar-x"></i></span>
+                                <input type="datetime-local" class="form-control border-start-0"
+                                    [(ngModel)]="membershipEndDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-3">
+                <button type="button" class="btn btn-light px-4" (click)="closeMembershipModal()">Cancel</button>
+                <button type="button" class="btn btn-primary px-4 bg-dark border-0" (click)="AddMembership()">Submit</button>
             </div>
         </div>
     </div>

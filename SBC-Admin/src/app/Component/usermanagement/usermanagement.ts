@@ -31,6 +31,8 @@ export class Usermanagement implements OnInit {
   imagePreviewUrl: string | null = null;
   isPasswordVisible: boolean = false;
   searchTerm: string = '';
+  membershipStartDate: string = '';
+  membershipEndDate: string = '';
 
   constructor(private route: Router, private service: SBC, private toast: ToastrNotificationService, private fb: FormBuilder) {
     this.AdduserForm = this.fb.group({
@@ -318,5 +320,51 @@ export class Usermanagement implements OnInit {
       (user.email && user.email.toLowerCase().includes(term)) ||
       (user.phoneNumber && user.phoneNumber.includes(term))
     );
+  }
+
+
+  showmembership: boolean = false;
+
+  openmodal(user: any) {
+    this.selectedUser = user;
+    this.membershipStartDate = '';
+    this.membershipEndDate = '';
+    this.showmembership = true;
+  }
+
+  closeMembershipModal() {
+    this.showmembership = false;
+    this.selectedUser = null;
+  }
+
+  AddMembership() {
+    if (!this.membershipStartDate || !this.membershipEndDate) {
+      this.toast.showError("Please select both start and end dates");
+      return;
+    }
+
+    const adminUserId = sessionStorage.getItem('userid');
+    const payload = {
+      userMemberShipID: 0,
+      adminUserID: Number(adminUserId),
+      userID: this.selectedUser.userID,
+      startDate: new Date(this.membershipStartDate).toISOString(),
+      endDate: new Date(this.membershipEndDate).toISOString()
+    };
+
+    this.service.addUserMembership(payload).subscribe({
+      next: (res: any) => {
+        if (res.status) {
+          this.toast.showSuccess(res.message || "Membership added successfully");
+          this.closeMembershipModal();
+          this.getalldata();
+        } else {
+          this.toast.showError(res.message || "Failed to add membership");
+        }
+      },
+      error: (err) => {
+        this.toast.showError("Something went wrong");
+      }
+    });
   }
 }
