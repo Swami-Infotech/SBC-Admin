@@ -18,6 +18,7 @@ import { UserRide } from './Component/ride-management/user-ride/user-ride';
 import { AuthGuard } from './Common/auth.guard';
 import { Ridesefty } from './Component/ridesefty/ridesefty';
 import { Notification } from './Component/notification/notification';
+import { Userride } from './Component/userride/userride';
 
 export const routes: Routes = [
     {
@@ -121,6 +122,11 @@ export const routes: Routes = [
     {
         path:"RideSefty",
         component:Ridesefty,
+        canActivate:[AuthGuard]
+    },
+    {
+        path:"UserRide",
+        component:Userride,
         canActivate:[AuthGuard]
     }
 ];

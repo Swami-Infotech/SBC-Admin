@@ -46,6 +46,7 @@ export class Sidebar implements OnInit {
     Team: 'bi bi-person-badge-fill',
     Inquiry: 'bi bi-chat-left-dots-fill',
     RideSafety: 'bi bi-shield-check',
+    UserRide: 'bi bi-card-list',
     Notification: 'bi bi-bell-fill',
   };
 

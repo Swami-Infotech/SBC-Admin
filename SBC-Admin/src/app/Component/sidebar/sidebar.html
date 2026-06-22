@@ -71,6 +71,13 @@
       </li>
 
       <li class="sidebar-item">
+        <a class="sidebar-link" routerLink="/UserRide" routerLinkActive="Selected-Item">
+          <i [class]="getIcon('UserRide')"></i>
+          <span *ngIf="isExpanded">User Ride</span>
+        </a>
+      </li>
+
+      <li class="sidebar-item">
         <a class="sidebar-link" routerLink="/Notification" routerLinkActive="Selected-Item">
           <i [class]="getIcon('Notification')"></i>
           <span *ngIf="isExpanded">Notification</span>

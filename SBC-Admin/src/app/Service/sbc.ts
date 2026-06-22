@@ -221,4 +221,16 @@ export class SBC {
     return this.http.post(this.baseurl + 'Admin/AddUserMemberShip', data);
   }
 
+  getalluserRides(data: any) {
+    return this.http.post(this.baseurl + 'controller/GetAllUserRideForAdmin', data);
+  }
+
+  changeuserRideStatus(data: any) {
+    return this.http.post(this.baseurl + 'controller/ChangeUserRideStatus', data);
+  }
+
+  deleteuserRide(userRideID: number) {
+    return this.http.get(this.baseurl + `controller/DeleteUserRide?UserRideID=${userRideID}`);
+  }
+
 }
