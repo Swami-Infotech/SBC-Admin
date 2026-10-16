@@ -1,9 +1,12 @@
 <aside id="sidebar" [ngClass]="{ expand: isExpanded, collapsed: !isExpanded }">
   <div class="sidebar-container">
     <div class="sidebar-header">
-      <div class="logo" (click)="toggleSidebar()">
-        <img src="../../../assets/logo/logo.png" alt="Bhagat Samosa" />
+      <div class="logo" (click)="toggleSidebar()" title="Toggle Sidebar">
+        <img src="../../../assets/logo/logo.png" alt="SBC Admin" />
       </div>
+      <button type="button" class="sidebar-toggle-btn" (click)="toggleSidebar()" [title]="isExpanded ? 'Collapse' : 'Expand'">
+        <i class="bi" [ngClass]="isExpanded ? 'bi-chevron-left' : 'bi-chevron-right'"></i>
+      </button>
     </div>
 
     <ul class="sidebar-nav">

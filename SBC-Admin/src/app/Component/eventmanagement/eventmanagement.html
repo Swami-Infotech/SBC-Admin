@@ -55,9 +55,9 @@
                             <td>{{ event.eventLocation }}</td>
                             <td class="text-success fw-bold">₹{{ event.amount }}</td>
                             <td class="action-btns">
-                                <i class="bi bi-eye text-primary" (click)="redirect()"></i>
+                                <i class="bi bi-eye text-primary" (click)="viewEvent(event.eventID || event.EventID)"></i>
                                 <i class="bi bi-pencil text-warning" (click)="OpenUpdateModal(event)"></i>
-                                <i class="bi bi-trash-fill text-danger delete" (click)="deleteevent(event.EventID)"></i>
+                                <i class="bi bi-trash-fill text-danger delete" (click)="deleteevent(event.EventID || event.eventID)"></i>
                             </td>
                         </tr>
                         <tr *ngIf="eventList.length === 0">
@@ -145,6 +145,7 @@
                     <div class="row g-4">
                         <!-- Event Name -->
                         <div class="col-md-6">
+                             <label class="form-label fw-bold small">Event Title</label>
                             <div class="input-group shadow-sm border rounded">
                                 <span class="input-group-text bg-white border-0"><i class="bi bi-calendar-event"></i></span>
                                 <input type="text" class="form-control border-0" [class.is-invalid]="EventForm.get('eventName')?.touched && EventForm.get('eventName')?.invalid" placeholder="e.g. Summer Cyclathon" formControlName="eventName">
@@ -207,6 +208,14 @@
                                 <input type="text" class="form-control border-0" placeholder="Brief event summary" formControlName="eventDescription">
                             </div>
                         </div>
+
+                        <!-- isFree Toggle -->
+                        <div class="col-md-6 d-flex align-items-center">
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="eventIsFreeToggle" formControlName="isFree">
+                                <label class="form-check-label fw-bold small ms-2" for="eventIsFreeToggle" style="cursor: pointer;">Is Free Event?</label>
+                            </div>
+                        </div>
                     </div>
 
                     <hr class="my-4 opacity-25">
@@ -252,7 +261,7 @@
                         <div class="row g-2">
                             <div *ngFor="let img of eventAttachmentArray.controls; let i = index" class="col-md-3 col-6">
                                 <div class="position-relative border rounded shadow-sm overflow-hidden bg-white" style="height: 100px;">
-                                    <img [src]="img.value.startsWith('data:') ? img.value : img.value" class="w-100 h-100 object-fit-cover">
+                                    <img [src]="getImageUrl(img.value)" class="w-100 h-100 object-fit-cover">
                                     <button type="button" class="btn btn-danger btn-sm p-0 position-absolute top-0 end-0 rounded-circle m-1" 
                                             style="width: 20px; height: 20px; opacity: 0.9;" (click)="removeAttachment(i)">
                                         <i class="bi bi-x" style="font-size: 14px;"></i>

@@ -1,53 +1,51 @@
-<div class="container p-4">
-    <div class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="header-title">
-                        <h2>Ride Sefty</h2>
-                    </div>
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="header-title">
+                    <h2>Ride Safety</h2>
                 </div>
-                <div class="col-lg-6">
-                    <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
+            </div>
+            <div class="col-lg-6">
+                <div class="search d-flex flex-wrap align-items-center justify-content-end  ">
                     <div class="search-box">
                         <i class="bi bi-search search-icon"></i>
                         <input type="text" placeholder="Search..." />
                     </div>
                     <div class="add-btn ms-3 pe-auto" (click)="OpenModal()">
-                        <button class="btn">Add Ride Sefty</button>
+                        <button class="btn">Add Ride Safety</button>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="table-container">
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Sr.No</th>
-                                <th>Title</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Safety Guideline</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            <tr *ngFor="let d of ride;let i = index">
-                                <td>{{i + 1}}</td>
-                                <td>{{d.safetyText}}</td>
-                                <td class="action-btns">
-                                    <i class="bi bi-pencil" (click)="updateride(d)"></i>
-                                    <i class="bi bi-trash-fill delete" (click)="deleteride(d.rideSafetyID)"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <tbody>
+                        <tr *ngFor="let d of ride;let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{d.safetyText}}</td>
+                            <td class="action-btns">
+                                <i class="bi bi-pencil" (click)="updateride(d)"></i>
+                                <i class="bi bi-trash-fill delete" (click)="deleteride(d.rideSafetyID)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -57,12 +55,12 @@
 <!-- add ride modal start -->
 <div class="modal" [class.show]="isopenmodal" [style.display]="isopenmodal ? 'block' : 'none'">
 
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- HEADER -->
             <div class="modal-header">
-                <h5>Add Slider</h5>
+                <h5>{{ iseditmodal ? 'Update Ride Safety Guideline' : 'Add Ride Safety Guideline' }}</h5>
                 <button class="btn-close" (click)="closeModal()">✕</button>
             </div>
 

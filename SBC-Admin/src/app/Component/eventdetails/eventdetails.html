@@ -1,76 +1,133 @@
 <!-- header section start -->
 <div class="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
+    <div class="container-fluid">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 shadow-sm" (click)="goBack()">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Events
+                </button>
                 <div class="heder-title">
-                    <h2>Event Details</h2>
+                    <h2 class="mb-0 fw-bold">{{ eventDetails?.eventName || 'Event Details' }}</h2>
                 </div>
+            </div>
+            <div *ngIf="eventDetails" class="d-flex align-items-center gap-2">
+                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2 fw-semibold">
+                    <i class="bi bi-tag me-1"></i>
+                    {{ (eventDetails?.amount && eventDetails?.amount > 0) ? ('₹' + eventDetails?.amount) : 'Free Event' }}
+                </span>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2 fw-semibold" *ngIf="eventDetails?.eventTotalKms">
+                    <i class="bi bi-speedometer2 me-1"></i> {{ eventDetails?.eventTotalKms }} KMs
+                </span>
             </div>
         </div>
     </div>
 </div>
 <!-- header section end -->
 
+<!-- Loading Spinner -->
+<div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted mt-2">Loading event details...</p>
+</div>
+
 <!-- event details section start -->
-<section class="event-detaiils">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="image-card">
+<section class="event-details-card mt-3" *ngIf="!loading">
+    <div class="row g-4">
+        <!-- LEFT SIDE: GALLERY -->
+        <div class="col-lg-5">
+            <div class="image-card p-0">
+                <div class="main-image-container position-relative overflow-hidden rounded-4 shadow-sm bg-light" style="height: 360px;">
+                    <img [src]="selectedImage" class="w-100 h-100 object-fit-cover main-image" alt="Event preview" />
+                </div>
 
-                    <img [src]="selectedImage" class="main-image" />
-
-                    <div class="thumbs d-flex mt-3">
-                        <img *ngFor="let img of images" [src]="img" (click)="selectImage(img)" class="thumb" />
-
-                        <div class="thumb add-more">+</div>
-                    </div>
-
+                <div class="thumbs d-flex flex-wrap mt-3 gap-2" *ngIf="images.length > 1">
+                    <img *ngFor="let img of images" [src]="img" (click)="selectImage(img)" 
+                         class="thumb rounded-3 shadow-xs" [class.active]="selectedImage === img" alt="Thumb" />
                 </div>
             </div>
+        </div>
 
-            <!-- RIGHT SIDE (DETAILS FORM) -->
-            <div class="col-lg-7">
-                <div class="details-card">
+        <!-- RIGHT SIDE (DETAILS) -->
+        <div class="col-lg-7">
+            <div class="details-card">
+                <div class="details-title">
+                    <h4 class="fw-bold text-dark mb-2">{{ eventDetails?.eventName || 'Event' }}</h4>
+                </div>
 
-                    <div class="details-title">
-                        <h5>Sunday Ride</h5>
+                <p class="description text-secondary mb-4" style="line-height: 1.7;">
+                    {{ eventDetails?.eventDescription || 'No description provided.' }}
+                </p>
+
+                <!-- Location -->
+                <div class="meta-item">
+                    <i class="bi bi-geo-alt-fill text-danger fs-5"></i>
+                    <div>
+                        <div class="text-muted small fw-medium">Location</div>
+                        <span class="fw-semibold">{{ eventDetails?.eventLocation || 'Location not specified' }}</span>
                     </div>
+                </div>
 
-                    <p class="description">
-                        Here riders come together to explore beautiful routes, enjoy fresh air,
-                        and share the passion for cycling. This ride is perfect for both beginners
-                        and experienced riders looking to connect with fellow enthusiasts.
-                    </p>
-
-                    <!-- Location -->
-                    <div class="input-box">
-                        <i class="bi bi-geo-alt"></i>
-                        <span>
-                            Sarthana Nature Park Gate Sarthana Jakatnaka Road Opp. Zoo Garden Surat, Gujarat -395006
-                            India
-                        </span>
+                <!-- Date & Time -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="meta-item">
+                            <i class="bi bi-calendar-event-fill text-primary fs-5"></i>
+                            <div>
+                                <div class="text-muted small fw-medium">Event Date</div>
+                                <span class="fw-semibold">{{ eventDetails?.eventDate ? (eventDetails?.eventDate | date:'fullDate') : 'Date TBD' }}</span>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Date -->
-                    <div class="input-box">
-                        <i class="bi bi-calendar"></i>
-                        <input type="date" class="form-control border-0" />
+                    <div class="col-md-6">
+                        <div class="meta-item">
+                            <i class="bi bi-clock-fill text-warning fs-5"></i>
+                            <div>
+                                <div class="text-muted small fw-medium">Event Time</div>
+                                <span class="fw-semibold">{{ eventDetails?.eventDate ? (eventDetails?.eventDate | date:'shortTime') : 'Time TBD' }}</span>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Start Time -->
-                    <div class="input-box">
-                        <i class="bi bi-clock"></i>
-                        <input type="time" class="form-control border-0" />
+                <!-- Distance & Joiners -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="meta-item">
+                            <i class="bi bi-speedometer2 text-info fs-5"></i>
+                            <div>
+                                <div class="text-muted small fw-medium">Total Distance</div>
+                                <span class="fw-semibold">{{ eventDetails?.eventTotalKms || 0 }} KMs</span>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- End Time -->
-                    <div class="input-box">
-                        <i class="bi bi-clock-history"></i>
-                        <input type="time" class="form-control border-0" />
+                    <div class="col-md-6">
+                        <div class="meta-item">
+                            <i class="bi bi-people-fill text-success fs-5"></i>
+                            <div>
+                                <div class="text-muted small fw-medium">Joined Members</div>
+                                <span class="fw-semibold">{{ eventDetails?.totalJoinMember || 0 }} Members</span>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
+                <!-- Activities / Time Slots -->
+                <div class="activities-section mt-4" *ngIf="eventTimes && eventTimes.length > 0">
+                    <h6 class="fw-bold text-dark mb-3">
+                        <i class="bi bi-list-check me-2 text-primary"></i>Schedule & Activities
+                    </h6>
+                    <div class="list-group shadow-sm border-0">
+                        <div *ngFor="let slot of eventTimes" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-3 border rounded-3 mb-2 bg-light">
+                            <span class="fw-semibold text-dark">
+                                <i class="bi bi-dot fs-4 text-primary align-middle"></i>{{ slot.timeTitle }}
+                            </span>
+                            <span class="badge bg-primary rounded-pill px-3 py-2">
+                                <i class="bi bi-clock me-1"></i>{{ slot.startTime | date:'shortTime' }}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

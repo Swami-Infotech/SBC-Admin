@@ -35,6 +35,7 @@ export class RideManagement implements OnInit {
       description: ['', Validators.required],
       rideDate: ['', Validators.required],
       rideTotalKms: [0],
+      isFree: [false],
       rideTime: this.fb.array([]),
       rideAttachment: this.fb.array([])
     })
@@ -135,8 +136,16 @@ export class RideManagement implements OnInit {
     this.rideTimeArray.removeAt(index);
   }
 
-  addAttachment(base64: string = '') {
-    this.rideAttachmentArray.push(this.fb.control(base64));
+  createAttachmentGroup(url: string = '', attachmentID: number = 0): FormGroup {
+    return this.fb.group({
+      attachmentID: [attachmentID],
+      attachmentURl: [url, Validators.required],
+      isFeatured: [true]
+    });
+  }
+
+  addAttachment(url: string = '', attachmentID: number = 0) {
+    this.rideAttachmentArray.push(this.createAttachmentGroup(url, attachmentID));
   }
 
   removeAttachment(index: number) {
@@ -145,20 +154,37 @@ export class RideManagement implements OnInit {
 
   onFileChange(event: any) {
     const files = event.target.files;
-    if (files) {
+    if (files && files.length > 0) {
       for (let i = 0; i < files.length; i++) {
-        // Temporarily passing blank string as requested
-        this.addAttachment('');
+        const file = files[i];
+        if (!file.type.startsWith('image/')) {
+          this.toast.showError('Please select a valid image file');
+          continue;
+        }
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const base64Data = e.target.result as string;
+          this.addAttachment(base64Data, 0);
+        };
+        reader.readAsDataURL(file);
       }
+      event.target.value = '';
     }
   }
 
-
+  getImageUrl(item: any): string {
+    const value = typeof item === 'string' ? item : (item?.attachmentURl || '');
+    if (!value) return '';
+    if (value.startsWith('data:') || value.startsWith('http://') || value.startsWith('https://')) {
+      return value;
+    }
+    return 'data:image/png;base64,' + value;
+  }
 
   OpenModal() {
     this.isModalOpen = true;
     this.isEditMode = false;
-    this.RideForm.reset({ rideID: 0, userID: sessionStorage.getItem('userid') || 0, rideTotalKms: 0, rideDate: new Date().toISOString().split('T')[0] });
+    this.RideForm.reset({ rideID: 0, userID: sessionStorage.getItem('userid') || 0, rideTotalKms: 0, rideDate: new Date().toISOString().split('T')[0], isFree: false });
     this.rideTimeArray.clear();
     this.rideAttachmentArray.clear();
   }
@@ -181,38 +207,66 @@ export class RideManagement implements OnInit {
       description: ride.description,
       rideDate: formattedDate,
       rideTotalKms: ride.rideTotalKms,
-      userID: Number(sessionStorage.getItem('userid'))
+      userID: Number(sessionStorage.getItem('userid')),
+      isFree: ride.isFree || false
     });
 
     // Patch Time Slots
     this.rideTimeArray.clear();
-    if (ride.rideTime && Array.isArray(ride.rideTime)) {
-      ride.rideTime.forEach((slot: any) => {
-        // Extract HH:mm from ISO or full string
-        let timePart = '00:00';
-        if (slot.startTime && slot.startTime.includes('T')) {
-          timePart = slot.startTime.split('T')[1].substring(0, 5);
-        } else if (slot.startTime && slot.startTime.includes(':')) {
-          timePart = slot.startTime.substring(0, 5);
+    if (ride.rideTime && Array.isArray(ride.rideTime) && ride.rideTime.length > 0) {
+      this.populateRideTimeSlots(ride.rideTime);
+    } else if (ride.rideID) {
+      this.service.getallridetimebyid(ride.rideID).subscribe({
+        next: (res: any) => {
+          if (res.status && Array.isArray(res.data)) {
+            this.populateRideTimeSlots(res.data);
+          }
         }
-
-        this.rideTimeArray.push(this.fb.group({
-          timeID: [slot.timeID],
-          timeTitle: [slot.timeTitle, Validators.required],
-          startTime: [timePart, Validators.required]
-        }));
       });
     }
 
     // Patch Attachments
     this.rideAttachmentArray.clear();
-    if (ride.rideAttachment && Array.isArray(ride.rideAttachment)) {
-      ride.rideAttachment.forEach((att: any) => {
-        if (att.attachmentURl) {
-          this.addAttachment(att.attachmentURl);
+    if (ride.rideAttachment && Array.isArray(ride.rideAttachment) && ride.rideAttachment.length > 0) {
+      this.populateRideAttachments(ride.rideAttachment);
+    } else if (ride.rideID) {
+      this.service.getallrideimagebyid(ride.rideID).subscribe({
+        next: (res: any) => {
+          if (res.status && Array.isArray(res.data)) {
+            this.populateRideAttachments(res.data);
+          }
         }
       });
     }
+  }
+
+  private populateRideTimeSlots(slots: any[]) {
+    this.rideTimeArray.clear();
+    slots.forEach((slot: any) => {
+      let timePart = '00:00';
+      if (slot.startTime && slot.startTime.includes('T')) {
+        timePart = slot.startTime.split('T')[1].substring(0, 5);
+      } else if (slot.startTime && slot.startTime.includes(':')) {
+        timePart = slot.startTime.substring(0, 5);
+      }
+
+      this.rideTimeArray.push(this.fb.group({
+        timeID: [Number(slot.timeID || slot.TimeID || 0)],
+        timeTitle: [slot.timeTitle || slot.TimeTitle, Validators.required],
+        startTime: [timePart, Validators.required]
+      }));
+    });
+  }
+
+  private populateRideAttachments(attachments: any[]) {
+    this.rideAttachmentArray.clear();
+    attachments.forEach((att: any) => {
+      const url = att?.attachmentURl || att?.attachmentURL || att?.attachmentUrl || att?.url || (typeof att === 'string' ? att : '');
+      const id = Number(att?.attachmentID || att?.attachmentId || 0);
+      if (url) {
+        this.addAttachment(url, id);
+      }
+    });
   }
 
   saveRide() {
@@ -224,13 +278,23 @@ export class RideManagement implements OnInit {
 
     const payload = { ...this.RideForm.getRawValue() };
     const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-    // Ensure rideDate is in ISO format
+    // Ensure rideDate is formatted without timezone shift
     if (payload.rideDate) {
-      payload.rideDate = new Date(payload.rideDate).toISOString();
+      if (typeof payload.rideDate === 'string' && payload.rideDate.includes('T')) {
+        const [dPart, tPart] = payload.rideDate.split('T');
+        const [yr, mo, da] = dPart.split('-').map((v: string) => parseInt(v, 10));
+        const tPieces = tPart.split(':');
+        const hr = parseInt(tPieces[0], 10) || 0;
+        const mn = parseInt(tPieces[1], 10) || 0;
+        payload.rideDate = new Date(Date.UTC(yr, mo - 1, da, hr, mn, 0)).toISOString();
+      } else {
+        const d = new Date(payload.rideDate);
+        payload.rideDate = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), 0)).toISOString();
+      }
     } else {
-      payload.rideDate = today.toISOString();
+      payload.rideDate = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), 0)).toISOString();
     }
 
     // Ensure numeric fields are numbers
@@ -238,29 +302,57 @@ export class RideManagement implements OnInit {
     payload.rideTotalKms = Number(payload.rideTotalKms || 0);
     payload.userID = Number(payload.userID);
 
-    // Transforming rideAttachment to array of objects as per new schema
+    // Transforming rideAttachment to array of objects as per schema
     if (payload.rideAttachment && Array.isArray(payload.rideAttachment)) {
-      payload.rideAttachment = payload.rideAttachment.map((img: string) => {
+      payload.rideAttachment = payload.rideAttachment.map((item: any) => {
+        let url = typeof item === 'string' ? item : (item?.attachmentURl || '');
+        const id = typeof item === 'object' && item?.attachmentID ? Number(item.attachmentID) : 0;
+
+        if (url && url.includes('base64,')) {
+          url = url.split('base64,')[1];
+        }
+
         return {
-          attachmentID: 0,
-          attachmentURl: img || '',
+          attachmentID: id,
+          attachmentURl: url || '',
           isFeatured: true
         };
-      });
+      }).filter((att: any) => att.attachmentURl && att.attachmentURl.trim().length > 0);
 
       if (payload.rideAttachment.length === 0) {
         payload.rideAttachment = [{
-          attachmentID: 0, attachmentURl: '', isFeatured: true
+          attachmentID: 0,
+          attachmentURl: '',
+          isFeatured: true
         }];
       }
     }
 
-    // Checking time slot format and appending today's date for full ISO
+    // Checking time slot format and preserving local hours/minutes without timezone shift
     if (payload.rideTime && Array.isArray(payload.rideTime)) {
       payload.rideTime = payload.rideTime.map((item: any) => {
         let timeStr = item.startTime || '00:00';
-        if (timeStr.length === 5) timeStr += ':00';
-        const fullDateTime = new Date(`${todayStr}T${timeStr}`).toISOString();
+        if (timeStr.includes('T')) {
+          timeStr = timeStr.split('T')[1];
+        }
+        if (timeStr.includes('.')) {
+          timeStr = timeStr.split('.')[0];
+        }
+        if (timeStr.includes('Z')) {
+          timeStr = timeStr.replace('Z', '');
+        }
+
+        const tPieces = timeStr.split(':');
+        const hr = parseInt(tPieces[0], 10) || 0;
+        const mn = parseInt(tPieces[1], 10) || 0;
+
+        let datePart = todayStr;
+        if (payload.rideDate && typeof payload.rideDate === 'string' && payload.rideDate.includes('-')) {
+          datePart = payload.rideDate.split('T')[0];
+        }
+
+        const [yr, mo, da] = datePart.split('-').map((v: string) => parseInt(v, 10));
+        const fullDateTime = new Date(Date.UTC(yr, mo - 1, da, hr, mn, 0)).toISOString();
 
         return {
           ...item,
@@ -280,7 +372,7 @@ export class RideManagement implements OnInit {
           this.toast.showSuccess(res.message || (this.isEditMode ? "Ride updated" : "Ride added"));
           this.closeModal();
           this.getalldata();
-          this.RideForm.reset({ rideID: 0, userID: payload.userID, rideTotalKms: 0 });
+          this.RideForm.reset({ rideID: 0, userID: payload.userID, rideTotalKms: 0, isFree: false });
           this.rideTimeArray.clear();
           this.rideAttachmentArray.clear();
         } else {

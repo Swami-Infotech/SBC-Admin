@@ -23,6 +23,8 @@ export class App implements OnInit {
   private router = inject(Router);
   public loader = inject(LoaderService);
 
+  isSidebarCollapsed = signal(false);
+
   constructor() {
     // Initial check
     this.isLoginPage.set(this.router.url === '/Login' || window.location.pathname === '/Login');
@@ -33,7 +35,12 @@ export class App implements OnInit {
       this.isLoginPage.set(event.url === '/Login' || event.urlAfterRedirects === '/Login');
     });
   }
+
+  onSidebarToggled(expanded: boolean) {
+    this.isSidebarCollapsed.set(!expanded);
+  }
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // App initialized
   }
 }

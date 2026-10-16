@@ -89,11 +89,18 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                component: Eventmanagement
+                component: Eventmanagement,
+                canActivate: [AuthGuard]
             },
             {
                 path: "eventdetails",
-                component: Eventdetails
+                component: Eventdetails,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: "eventdetails/:id",
+                component: Eventdetails,
+                canActivate: [AuthGuard]
             }
         ]
     },

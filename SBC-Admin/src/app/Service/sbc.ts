@@ -113,6 +113,26 @@ export class SBC {
     return this.http.get(this.baseurl + `Event/DeleteEvent?EventID=${EventID}`)
   }
 
+  getalleventimagebyid(EventID: number) {
+    return this.http.get(this.baseurl + `Event/GetAllEventImageByID?EventID=${EventID}`);
+  }
+
+  getalleventtimebyid(EventID: number) {
+    return this.http.get(this.baseurl + `Event/GetAllEventTimeByID?EventID=${EventID}`);
+  }
+
+  geteventbyid(EventID: number, UserID: number) {
+    return this.http.get(this.baseurl + `Event/GetEventbyID?EventID=${EventID}&UserID=${UserID}`);
+  }
+
+  getallrideimagebyid(RideID: number) {
+    return this.http.get(this.baseurl + `Ride/GetAllRideImageByID?RideID=${RideID}`);
+  }
+
+  getallridetimebyid(RideID: number) {
+    return this.http.get(this.baseurl + `Ride/GetAllRideTimeByID?RideID=${RideID}`);
+  }
+
   addteammember(data:any){
     return this.http.post(this.baseurl + 'Admin/AddCoreTeamMember',data);
   }

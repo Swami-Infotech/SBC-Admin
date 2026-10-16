@@ -1,23 +1,22 @@
-<div class="container p-4">
-    <div class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="header-title">
-                        <h2>User Rides</h2>
-                    </div>
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="header-title">
+                    <h2>User Rides</h2>
                 </div>
-                <div class="col-lg-6">
-                    <div class="search d-flex flex-wrap align-items-center justify-content-end">
-                        <div class="search-box">
-                            <i class="bi bi-search search-icon"></i>
-                            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="Search user rides..." />
-                        </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="search d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="Search user rides..." />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <div class="container">
         <div class="row">
@@ -121,7 +120,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <!-- image view modal start -->
 <div class="modal" [class.show]="isImageModalOpen" [style.display]="isImageModalOpen ? 'block' : 'none'">

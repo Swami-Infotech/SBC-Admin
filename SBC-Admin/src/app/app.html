@@ -3,10 +3,12 @@
 @if (isLoginPage()) {
   <router-outlet></router-outlet>
 } @else {
-  <div class="app-layout">
-    <app-sidebar></app-sidebar>
+  <div class="app-layout" [class.sidebar-collapsed]="isSidebarCollapsed()">
+    <app-sidebar (sidebarToggled)="onSidebarToggled($event)"></app-sidebar>
     <main class="main-content">
-      <router-outlet></router-outlet>
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
     </main>
   </div>
 }

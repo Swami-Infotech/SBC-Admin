@@ -128,9 +128,9 @@
   background: #0f172a;
   color: white;
   border: none;
-  padding: 1.1rem;
-  border-radius: 20px;
-  font-size: 1.1rem;
+  padding: 1rem;
+  border-radius: 50px;
+  font-size: 1.05rem;
   font-weight: 700;
   margin-top: 1rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -138,9 +138,9 @@
 }
 
 .btn-login:hover {
-  background: #1e293b;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   transform: translateY(-2px);
-  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.4);
+  box-shadow: 0 12px 25px -4px rgba(249, 115, 22, 0.4);
 }
 
 .btn-login:active {

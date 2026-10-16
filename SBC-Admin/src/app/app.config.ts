@@ -12,8 +12,16 @@ export const appConfig: ApplicationConfig = {
    providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideClientHydration(),
-    provideToastr({}), 
-    provideClientHydration(),
+    provideToastr({
+      timeOut: 3500,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressBar: true,
+      closeButton: true,
+      newestOnTop: true,
+      easeTime: 300,
+      tapToDismiss: true
+    }), 
     provideHttpClient(), 
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
@@ -21,6 +29,7 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-    }, provideAnimations(), provideAnimations(),
+    },
+    provideAnimations()
   ],
 };

@@ -25,10 +25,9 @@ export class Sidebar implements OnInit {
   ngOnInit(): void {}
 
   toggleSidebar() {
-    if (!this.isExpanded) {
-      this.isExpanded$.next(true);
-      this.sidebarToggled.emit(true);
-    }
+    this.isExpanded = !this.isExpanded;
+    this.isExpanded$.next(this.isExpanded);
+    this.sidebarToggled.emit(this.isExpanded);
   }
 
   getIsExpanded(): Observable<boolean> {
